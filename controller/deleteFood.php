@@ -2,31 +2,37 @@
 <?php
 $aResponse = [
     'status' => false,
-    'message' => 'Data not saved!',
+    'message' => 'Data not Delete!',
 
 ];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = file_get_contents("php://input");
-    $userData = json_decode($data);
+    $catData = json_decode($data);
 
-    if (isset($userData->catName)) {
-        $categoryName = mysqli_real_escape_string($conn, $userData->catName);
+    if (isset($catData->catId)) {
+        
+        $id = mysqli_real_escape_string($conn, $catData->catId);
 
+        $imageQuery = mysqli_query($conn, "SELECT image FROM item WHERE id='$id'");
+        $imageRow = mysqli_fetch_assoc($imageQuery);
+        $oldImage = $imageRow['image'];
+        unlink("../upload/$oldImage");
+        
 
-        $sql = "INSERT INTO category (name)VALUES ('$categoryName ')";
-                                          
+        $sql = "DELETE FROM item WHERE id = '$id';";
+
         $res = mysqli_query($conn, $sql);
 
         if ($res === true) {
             $aResponse = [
                 'status' => true,
-                'message' => 'Category saved Successfully'
+                'message' => 'Food Delate Successfully'
             ];
-        }else{
+        } else {
             $aResponse = [
                 'status' => true,
-                'message' => 'Category saved Unsuccessfully'
+                'message' => 'Food Delate Unsuccessfully'
             ];
         }
     } else {

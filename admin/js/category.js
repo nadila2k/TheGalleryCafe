@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 async function getCategory() {
   const response = await fetch(
-    "http://localhost/TheGalleryCafe/admin/controller/getCategory.php"
+    "http://localhost/TheGalleryCafe/controller/getCategory.php"
   );
   const data = await response.json();
 
@@ -58,7 +58,7 @@ document
       };
 
       const response = await fetch(
-        "http://localhost/TheGalleryCafe/admin/controller/updateCategory.php",
+        "http://localhost/TheGalleryCafe/controller/updateCategory.php",
         {
           method: "POST",
           headers: {
@@ -86,7 +86,7 @@ async function deleteUser(id) {
   };
 
   const response = await fetch(
-    "http://localhost/TheGalleryCafe/admin/controller/deleteCategory.php",
+    "http://localhost/TheGalleryCafe/controller/deleteCategory.php",
     {
       method: "POST",
       headers: {
@@ -125,7 +125,7 @@ document
       };
 
       const response = await fetch(
-        "http://localhost/TheGalleryCafe/admin/controller/addCategory.php",
+        "http://localhost/TheGalleryCafe/controller/addCategory.php",
         {
           method: "POST",
           headers: {

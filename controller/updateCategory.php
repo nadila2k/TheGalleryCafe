@@ -1,4 +1,4 @@
-<?php include '../../assets/config/conn.php'; ?>
+<?php include '../assets/config/conn.php'; ?>
 <?php
 $aResponse = [
     'status' => false,

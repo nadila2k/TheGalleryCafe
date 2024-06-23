@@ -1,4 +1,3 @@
-
 <?php
 include '../assets/config/conn.php';
 $aResponse = [
@@ -6,19 +5,18 @@ $aResponse = [
     'message' => 'Data not saved!',
 
 ];
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id = $_POST['id'];
+    $name = $_POST['name'];
+    $price = $_POST['price'];
+    $category = $_POST['category'];
+    $available = $_POST['available'];
+    $itemtype = $_POST['itemtype'];
+    $food_beverage = $_POST['food_beverage'];
+    $description = $_POST['description'];
 
-    if (isset($_POST['name'], $_POST['price'],  $_POST['category'], $_POST['available'], $_FILES['image'], $_POST['itemtype'], $_POST['food_beverage'], $_POST['description'])) {
-        $name =  $_POST['name'];
-        $price =  $_POST['price'];
-        $category = $_POST['category'];
-        $available = $_POST['available'];
-        $itemtype = $_POST['itemtype'];
-        $food_beverage = $_POST['food_beverage'];
-        $description = $_POST['description'];
 
-
+    if (!empty($_FILES['image']['name'])) {
 
         $image = $_FILES['image'];
         $imageName = $image['name'];
@@ -29,7 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $imageExt = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
         $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
-
         if (in_array($imageExt, $allowedTypes)) {
             if ($imageError === 0) {
                 if ($imageSize <= 500000000) {
@@ -37,22 +34,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $imagePath = '../upload/' . $imageNewName;
 
                     if (move_uploaded_file($imageTmpName, $imagePath)) {
-
-                        $sql = "INSERT INTO item (name, price, image, availability, category_id, type, description, food_or_beverage) 
-                        VALUES ('$name', '$price', '$imageNewName', '$available', '$category', '$itemtype', '$description', '$food_beverage')";
-                        $res = mysqli_query($conn, $sql);
-
-
-
-                        if ($res === true) {
+                        $imageQuery = mysqli_query($conn, "SELECT image FROM item WHERE id='$id'");
+                        $imageRow = mysqli_fetch_assoc($imageQuery);
+                        $oldImage = $imageRow['image'];
+                        unlink("../upload/$oldImage");
+                
+                        $sql = "UPDATE item SET name='$name', price='$price', category_id='$category', availability='$available', image='$imageNewName', type='$itemtype', food_or_beverage='$food_beverage', description='$description' WHERE id='$id'";
+                
+                        if (mysqli_query($conn, $sql)) {
                             $aResponse = [
                                 'status' => true,
-                                'message' => 'Food saved Successfully'
+                                'message' => 'Food item updated successfully.'
                             ];
                         } else {
                             $aResponse = [
                                 'status' => false,
-                                'message' => 'Food saved UnSuccessfully!'
+                                'message' => "Failed to update food item."
                             ];
                         }
                     } else {
@@ -80,13 +77,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ];
         }
     } else {
-        $aResponse = [
-            'status' => false,
-            'message' => 'Invalid input!.'
-        ];
+
+        $imageQuery = mysqli_query($conn, "SELECT image FROM item WHERE id='$id'");
+        $imageRow = mysqli_fetch_assoc($imageQuery);
+        $image = $imageRow['image'];
+
+        $sql = "UPDATE item SET name='$name', price='$price', category_id='$category', availability='$available', image='$image', type='$itemtype', food_or_beverage='$food_beverage', description='$description' WHERE id='$id'";
+
+        if (mysqli_query($conn, $sql)) {
+            $aResponse = [
+                'status' => false,
+                'message' => 'Food item updated successfully.'
+            ];
+        } else {
+            $aResponse = [
+                'status' => false,
+                'message' => "Failed to update food item."
+            ];
+        }
     }
     header('Content-Type: application/json');
     echo json_encode($aResponse);
 }
-
-?>
