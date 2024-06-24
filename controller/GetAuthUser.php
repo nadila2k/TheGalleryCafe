@@ -1,4 +1,8 @@
-<?php include "assets/config/conn.php"; ?>
+
+<?php
+session_start();
+ include "../assets/config/conn.php";
+  ?>
 <?php
 $aResponse = [
     'status' => false,
@@ -14,28 +18,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $userName = mysqli_real_escape_string($conn, $userData->UserName);
         $password = mysqli_real_escape_string($conn, $userData->pasw);
 
-        $sql = "SELECT * FROM users WHERE name = '$userName' AND password = '$password'";
+        $sql = "SELECT * FROM user WHERE name = '$userName' AND password = '$password'";
         $res = mysqli_query($conn, $sql);
 
         if ($res && mysqli_num_rows($res) > 0) {
             $row = mysqli_fetch_assoc($res);
-            if ($row['level'] == 1) {
+            $_SESSION['user_id'] = $row['id'];
+            $_SESSION['username'] = $row['name'];
+            if ($row['type'] == 1) {
                 $aResponse = [
                     'status' => true,
                     'message' => 'admin',
-                    'userLevel' => '1'
+                    'userType' => '1'
                 ];
-            } else if ($row['level'] == 2) {
+            } else if ($row['type'] == 2) {
                 $aResponse = [
                     'status' => true,
                     'message' => 'staff',
-                    'userLevel' => '2'
+                    'userType' => '2'
                 ];
             } else {
                 $aResponse = [
                     'status' => true,
                     'message' => 'client',
-                    'userLevel' => '3'
+                    'userType' => '3'
                 ];
             }
         } else {

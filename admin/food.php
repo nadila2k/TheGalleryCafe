@@ -145,7 +145,6 @@
                     <div data-mdb-input-init class="form-outline mb-4">
                         <label class="form-label" for="update-category">Category Name</label>
                         <select name="" id="update-category-el">
-                            
                         </select>
                     </div>
                     <div data-mdb-input-init class="form-outline mb-4">

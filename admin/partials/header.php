@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="./admin_css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         body {
@@ -69,6 +70,20 @@
             object-fit: cover;
             /* Ensures the image covers the entire 150x150 area */
         }
+
+        /* Style for the toggle icon */
+        .field-icon {
+            float: right;
+            margin-left: -25px;
+            margin-top: -25px;
+            position: relative;
+            z-index: 2;
+            cursor: pointer;
+        }
+
+        .form-outline {
+            position: relative;
+        }
     </style>
 </head>
 
@@ -95,13 +110,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                Customers
+                            <a class="nav-link" href="table.php">
+                                Mange table
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                Reports
+                            <a class="nav-link" href="user.php">
+                                Manage Users
                             </a>
                         </li>
                         <li class="nav-item">

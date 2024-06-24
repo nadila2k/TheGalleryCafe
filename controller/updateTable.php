@@ -8,11 +8,7 @@ $aResponse = [
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST['id'];
     $name = $_POST['name'];
-    $price = $_POST['price'];
-    $category = $_POST['category'];
-    $available = $_POST['available'];
-    $itemtype = $_POST['itemtype'];
-    $food_beverage = $_POST['food_beverage'];
+    $quantity = $_POST['quantity'];
     $description = $_POST['description'];
 
 
@@ -34,22 +30,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $imagePath = '../upload/' . $imageNewName;
 
                     if (move_uploaded_file($imageTmpName, $imagePath)) {
-                        $imageQuery = mysqli_query($conn, "SELECT image FROM item WHERE id='$id'");
+                        $imageQuery = mysqli_query($conn, "SELECT image FROM cafetable WHERE id='$id'");
                         $imageRow = mysqli_fetch_assoc($imageQuery);
                         $oldImage = $imageRow['image'];
                         unlink("../upload/$oldImage");
                 
-                        $sql = "UPDATE item SET name='$name', price='$price', category_id='$category', availability='$available', image='$imageNewName', type='$itemtype', food_or_beverage='$food_beverage', description='$description' WHERE id='$id'";
+                        $sql = "UPDATE cafetable SET name='$name', qty='$quantity',  image='$imageNewName', description='$description' WHERE id='$id'";
                 
                         if (mysqli_query($conn, $sql)) {
                             $aResponse = [
                                 'status' => true,
-                                'message' => 'Food item updated successfully.'
+                                'message' => 'Table updated successfully.'
                             ];
                         } else {
                             $aResponse = [
                                 'status' => false,
-                                'message' => "Failed to update food item."
+                                'message' => "Failed to update Table item."
                             ];
                         }
                     } else {
@@ -78,21 +74,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     } else {
 
-        $imageQuery = mysqli_query($conn, "SELECT image FROM item WHERE id='$id'");
+        $imageQuery = mysqli_query($conn, "SELECT image FROM cafetable WHERE id='$id'");
         $imageRow = mysqli_fetch_assoc($imageQuery);
         $image = $imageRow['image'];
 
-        $sql = "UPDATE item SET name='$name', price='$price', category_id='$category', availability='$available', image='$image', type='$itemtype', food_or_beverage='$food_beverage', description='$description' WHERE id='$id'";
+        $sql = "UPDATE cafetable SET name='$name', qty='$quantity',  image='$image', description='$description' WHERE id='$id'";
 
         if (mysqli_query($conn, $sql)) {
             $aResponse = [
                 'status' => true,
-                'message' => 'Food item updated successfully.'
+                'message' => 'Table updated successfully.'
             ];
         } else {
             $aResponse = [
                 'status' => false,
-                'message' => "Failed to update food item."
+                'message' => "Failed to update Table."
             ];
         }
     }

@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                  <td>${el.availability}</td>
                   <td class="tbl-img"><img src="./../upload/${el.image}" alt=""></td>
                  <td>
-                   <button type="button" class="btn btn-primary" onclick="deleteUser(${el.id})">Delete</button>
+                   <button type="button" class="btn btn-primary" onclick="deleteItem(${el.id})">Delete</button>
                      <button type="button" class="btn btn-primary" onclick="editFood(${el.id})">Edit</button>
                </td>`;
     });
@@ -174,7 +174,7 @@ document.getElementById("form-food-update").addEventListener("submit", async fun
           const responseData = await response.json();
           console.log(responseData);
           if (responseData.status === true) {
-            getFood();
+             getFood();
               alertMessage(responseData.message);
               
               
@@ -188,7 +188,7 @@ document.getElementById("form-food-update").addEventListener("submit", async fun
 
 
 
-  async function deleteUser(id) {
+  async function deleteItem(id) {
     const data = {
       catId: id,
     };

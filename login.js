@@ -17,7 +17,7 @@ document.getElementById("form-login").addEventListener("submit",async function(e
     };
 
     const response = await fetch(
-        "http://localhost/TheGalleryCafe/getUsers.php",
+        "http://localhost/TheGalleryCafe/controller/GetAuthUser.php",
         {
           method: "POST",
           headers: {
@@ -31,7 +31,7 @@ document.getElementById("form-login").addEventListener("submit",async function(e
 
 
       if (responseData.status) {
-          switch(responseData.userLevel) {
+          switch(responseData.userType) {
               case '1':
                   window.location.href = "./admin/index.php";
                   break;
@@ -39,7 +39,7 @@ document.getElementById("form-login").addEventListener("submit",async function(e
                   window.location.href = "staff.php";
                   break;
               case '3':
-                  window.location.href = "client.php";
+                  window.location.href = "./Client/index.php";
                   break;
               
           }

@@ -1,3 +1,4 @@
+
 <?php
 include '../assets/config/conn.php';
 $aResponse = [
@@ -5,18 +6,15 @@ $aResponse = [
     'message' => 'Data not saved!',
 
 ];
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = $_POST['id'];
-    $name = $_POST['name'];
-    $price = $_POST['price'];
-    $category = $_POST['category'];
-    $available = $_POST['available'];
-    $itemtype = $_POST['itemtype'];
-    $food_beverage = $_POST['food_beverage'];
-    $description = $_POST['description'];
+
+    if (isset($_POST['name'], $_POST['quantity'],  $_FILES['image'], $_POST['description'])) {
+        $name =  $_POST['name'];
+        $quantity =  $_POST['quantity'];
+        $description = $_POST['description'];
 
 
-    if (!empty($_FILES['image']['name'])) {
 
         $image = $_FILES['image'];
         $imageName = $image['name'];
@@ -27,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $imageExt = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
         $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
+
         if (in_array($imageExt, $allowedTypes)) {
             if ($imageError === 0) {
                 if ($imageSize <= 500000000) {
@@ -34,22 +33,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $imagePath = '../upload/' . $imageNewName;
 
                     if (move_uploaded_file($imageTmpName, $imagePath)) {
-                        $imageQuery = mysqli_query($conn, "SELECT image FROM item WHERE id='$id'");
-                        $imageRow = mysqli_fetch_assoc($imageQuery);
-                        $oldImage = $imageRow['image'];
-                        unlink("../upload/$oldImage");
-                
-                        $sql = "UPDATE item SET name='$name', price='$price', category_id='$category', availability='$available', image='$imageNewName', type='$itemtype', food_or_beverage='$food_beverage', description='$description' WHERE id='$id'";
-                
-                        if (mysqli_query($conn, $sql)) {
+
+                        $sql = "INSERT INTO cafetable (name, qty, image,  description) 
+                        VALUES ('$name', '$quantity', '$imageNewName',  '$description')";
+                        $res = mysqli_query($conn, $sql);
+
+
+
+                        if ($res === true) {
                             $aResponse = [
                                 'status' => true,
-                                'message' => 'Food item updated successfully.'
+                                'message' => 'Table saved Successfully'
                             ];
                         } else {
                             $aResponse = [
                                 'status' => false,
-                                'message' => "Failed to update food item."
+                                'message' => 'Table saved UnSuccessfully!'
                             ];
                         }
                     } else {
@@ -77,25 +76,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ];
         }
     } else {
-
-        $imageQuery = mysqli_query($conn, "SELECT image FROM item WHERE id='$id'");
-        $imageRow = mysqli_fetch_assoc($imageQuery);
-        $image = $imageRow['image'];
-
-        $sql = "UPDATE item SET name='$name', price='$price', category_id='$category', availability='$available', image='$image', type='$itemtype', food_or_beverage='$food_beverage', description='$description' WHERE id='$id'";
-
-        if (mysqli_query($conn, $sql)) {
-            $aResponse = [
-                'status' => true,
-                'message' => 'Food item updated successfully.'
-            ];
-        } else {
-            $aResponse = [
-                'status' => false,
-                'message' => "Failed to update food item."
-            ];
-        }
+        $aResponse = [
+            'status' => false,
+            'message' => 'Invalid input!.'
+        ];
     }
     header('Content-Type: application/json');
     echo json_encode($aResponse);
 }
+
+?>
