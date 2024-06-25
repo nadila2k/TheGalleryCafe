@@ -123,10 +123,9 @@
                   <p class="mb-2">$26.48</p>
                 </div>
 
-                <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block btn-lg">
+                <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block btn-lg " onclick="cartSubmit()">
                   <div class="d-flex justify-content-between">
-                    <span>Checkout</span>
-                    <span>$26.48</span>
+                    <span>submit</span>
                   </div>
                 </button>
 

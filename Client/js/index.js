@@ -150,14 +150,18 @@ function updateCart() {
 
   let htmlStrCartItems = "";
   let total = 0;
+  const itemArray = [];
+  const tableArray = [];
 
   cart.forEach((item, index) => {
     let tblQty = item.qty;
-    let date = selectedDate;
+    let date = item.selectedDate != null ? item.selectedDate : "";
+    
     let quantity = item.quantity != null ? item.quantity : 1;
     let categoryName =
       item.category_name != null ? item.category_name : "Table";
-
+    
+    
     htmlStrCartItems += `
       <tr>
         <th scope="row">
@@ -172,6 +176,7 @@ function updateCart() {
         <td class="align-middle">
           <button class="btn btn-danger remove-from-cart" data-index="${index}">Remove</button>
         </td>`;
+        
 
     if (categoryName === "Table") {
       htmlStrCartItems += `
@@ -180,6 +185,16 @@ function updateCart() {
             <input min="1" max="${tblQty}" name="quantity" value="${quantity}" type="number" class="form-control form-control-sm" style="width: 50px;" data-index="${index}" onchange="updateItemQuantity(this)">
           </div>
         </td>`;
+
+        tableArray.push({
+          id: item.id,
+          name: item.name,
+          category: categoryName,
+          image: item.image,
+          qty: tblQty,
+          date: date,
+          quantity: quantity
+        });
     } else {
       htmlStrCartItems += `
         <td class="align-middle">
@@ -192,6 +207,15 @@ function updateCart() {
             item.price * quantity
           ).toFixed(2)}</p>
         </td>`;
+
+        itemArray.push({
+          id: item.id,
+          name: item.name,
+          category: categoryName,
+          image: item.image,
+          price: item.price * quantity,
+          quantity: quantity
+        });
       total += parseFloat(item.price) * quantity;
     }
 
@@ -201,11 +225,22 @@ function updateCart() {
   cartItemsContainer.innerHTML = htmlStrCartItems;
   cartTotalContainer.innerHTML = `$${total.toFixed(2)}`;
 
+  // console.log('Item Array:', itemArray);
+  // console.log('Table Array:', tableArray);
+
   document.querySelectorAll(".remove-from-cart").forEach((button) => {
     button.addEventListener("click", removeFromCart);
   });
+
+  cartSubmit(itemArray, tableArray);
+  
 }
 
+
+async function cartSubmit(itemArray, tableArray){
+    console.log('Item Array:', itemArray);
+    console.log('Table Array:', tableArray);
+}
 function updateItemQuantity(input) {
   const index = input.dataset.index;
   const quantity = parseInt(input.value);
