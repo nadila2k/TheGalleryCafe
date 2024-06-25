@@ -18,18 +18,20 @@ async function getCategory() {
     htmlStr += `<tr>
                <td>${index}</td>
                <td>${el.name}</td>
+               <td>${el.food_or_beverage}</td>
                <td>
                  <button type="button" class="btn btn-primary" onclick="deleteUser(${el.id})">Delete</button>
-                  <button type="button" class="btn btn-primary" onclick="editCategory(${el.id}, '${el.name}')">Edit</button>
+                  <button type="button" class="btn btn-primary" onclick="editCategory(${el.id}, '${el.name}','${el.food_or_beverage}')">Edit</button>
              </td>`;
   });
 
   tbody.innerHTML = htmlStr;
 }
 
-function editCategory(id, name) {
+function editCategory(id, name ,foodOrBeverage) {
   document.getElementById("edit-category-id").value = id;
   document.getElementById("edit-category-name").value = name;
+  document.getElementById("update-food_beverage").value = foodOrBeverage;
 
   let editModal = new bootstrap.Modal(
     document.getElementById("categoryEditModal")
@@ -44,7 +46,7 @@ document
 
     let id = document.getElementById("edit-category-id").value;
     let name = document.getElementById("edit-category-name").value;
-
+    let foodOrBeverage =  document.getElementById("update-food_beverage").value;
     let modalElement = document.getElementById("categoryEditModal");
     let modalInstance = bootstrap.Modal.getInstance(modalElement);
     if (!name) {
@@ -55,6 +57,7 @@ document
       const data = {
         id: id,
         name: name,
+        foodOrBeverage : foodOrBeverage
       };
 
       const response = await fetch(
@@ -110,6 +113,7 @@ document
     e.preventDefault();
 
     let name = document.getElementById("category").value;
+    const food_beverage= document.getElementById("food_beverage").value.trim();
 
     let modalElement = document.getElementById("categoryAddModal");
     let modalInstance = bootstrap.Modal.getInstance(modalElement);
@@ -122,8 +126,9 @@ document
 
       const data = {
         catName: name,
+        food_beverage : food_beverage
       };
-
+    console.log(data);
       const response = await fetch(
         "http://localhost/TheGalleryCafe/controller/addCategory.php",
         {

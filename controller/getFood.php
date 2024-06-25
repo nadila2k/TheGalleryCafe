@@ -7,7 +7,9 @@ function index($conn) {
     $categoryData = [];
 
     
-    $sql = "SELECT * FROM item"; 
+    $sql = "SELECT item.*, category.name AS category_name, category.food_or_beverage 
+    FROM item 
+    JOIN category ON item.category_id = category.id"; 
     $res = mysqli_query($conn,$sql);
     while ($rows=mysqli_fetch_assoc($res)) {
         $categoryData[] = $rows;

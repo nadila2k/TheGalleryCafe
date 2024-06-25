@@ -9,13 +9,13 @@ $aResponse = [
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    if (isset($_POST['name'], $_POST['price'],  $_POST['category'], $_POST['available'], $_FILES['image'], $_POST['itemtype'], $_POST['food_beverage'], $_POST['description'])) {
+    if (isset($_POST['name'], $_POST['price'],  $_POST['category'], $_POST['available'], $_FILES['image'], $_POST['itemtype'], $_POST['description'])) {
         $name =  $_POST['name'];
         $price =  $_POST['price'];
         $category = $_POST['category'];
         $available = $_POST['available'];
         $itemtype = $_POST['itemtype'];
-        $food_beverage = $_POST['food_beverage'];
+       
         $description = $_POST['description'];
 
 
@@ -38,8 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     if (move_uploaded_file($imageTmpName, $imagePath)) {
 
-                        $sql = "INSERT INTO item (name, price, image, availability, category_id, type, description, food_or_beverage) 
-                        VALUES ('$name', '$price', '$imageNewName', '$available', '$category', '$itemtype', '$description', '$food_beverage')";
+                        $sql = "INSERT INTO item (name, price, image, availability, category_id, type, description) 
+                        VALUES ('$name', '$price', '$imageNewName', '$available', '$category', '$itemtype', '$description')";
                         $res = mysqli_query($conn, $sql);
 
 

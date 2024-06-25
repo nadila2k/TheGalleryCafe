@@ -10,10 +10,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = file_get_contents("php://input");
     $catData = json_decode($data);
 
-    if (isset($catData->id)&&isset($catData->name)) {
+    if (isset($catData->id)&&isset($catData->name) && isset($catData->foodOrBeverage)) {
         $id = mysqli_real_escape_string($conn, $catData->id);
         $name = mysqli_real_escape_string($conn, $catData->name);
-        $sql = "UPDATE category SET name = '$name' WHERE id = '$id';";
+        $foodOrBeverage = mysqli_real_escape_string($conn, $catData->foodOrBeverage);
+        $sql = "UPDATE category SET name = '$name' , food_or_beverage ='$foodOrBeverage' WHERE id = '$id';";
                        
         $res = mysqli_query($conn, $sql);
 

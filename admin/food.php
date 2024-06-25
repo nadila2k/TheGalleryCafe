@@ -26,24 +26,7 @@
             </tr>
         </thead>
         <tbody id="tbl-Food">
-            <tr>
-                <th>No</th>
-                <th>Category Name</th>
-                <th>Action</th>
-                <td class="tbl-img"><img src="../assets/image/pizza.jpg" alt=""></td>
-                <th>No</th>
-                <th>Category Name</th>
-                <th>Action</th>
-            </tr>
-            <tr>
-                <th>No</th>
-                <th>Category Name</th>
-                <th>Action</th>
-                <td class="tbl-img"><img src="../assets/image/pizza.jpg" alt=""></td>
-                <th>No</th>
-                <th>Category Name</th>
-                <th>Action</th>
-            </tr>
+            
         </tbody>
     </table>
 </div>
@@ -91,15 +74,9 @@
                         
                     </div>
 
-                    <div data-mdb-input-init class="form-outline mb-4">
-                        <label class="form-label" for="food">Food Type </label>
-                        <select name="" id="food_beverage">
-                        <option value="food">Food </option>
-                            <option value="beverage">Beverage </option>
-
-                        </select>
+                    
                         
-                    </div>
+                    
                     <div data-mdb-input-init class="form-outline mb-4">
                         <input type="text" id="description" class="form-control" />
                         <label  class="form-label" for="description">Description</label>
@@ -160,13 +137,7 @@
                             <option value="china">China</option>
                         </select>
                     </div>
-                    <div data-mdb-input-init class="form-outline mb-4">
-                        <label class="form-label" for="update-food_beverage">Food Type</label>
-                        <select name="" id="update-food_beverage">
-                            <option value="food">Food</option>
-                            <option value="beverage">Beverage</option>
-                        </select>
-                    </div>
+                   
                     <div data-mdb-input-init class="form-outline mb-4">
                         <input type="text" id="update-description" class="form-control" />
                         <label class="form-label" for="update-description">Description</label>

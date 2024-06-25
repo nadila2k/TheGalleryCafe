@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $category = $_POST['category'];
     $available = $_POST['available'];
     $itemtype = $_POST['itemtype'];
-    $food_beverage = $_POST['food_beverage'];
+  
     $description = $_POST['description'];
 
 
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $oldImage = $imageRow['image'];
                         unlink("../upload/$oldImage");
                 
-                        $sql = "UPDATE item SET name='$name', price='$price', category_id='$category', availability='$available', image='$imageNewName', type='$itemtype', food_or_beverage='$food_beverage', description='$description' WHERE id='$id'";
+                        $sql = "UPDATE item SET name='$name', price='$price', category_id='$category', availability='$available', image='$imageNewName', type='$itemtype', description='$description' WHERE id='$id'";
                 
                         if (mysqli_query($conn, $sql)) {
                             $aResponse = [
