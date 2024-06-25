@@ -1,11 +1,13 @@
 document.addEventListener("DOMContentLoaded", async function () {
   console.log("health ok!");
   getFood();
+  getCategory();
+  getTable();
 });
 
 let cart = [];
 
-async function getFood() {
+async function getFood(category = "", item = "") {
   const response = await fetch(
     "http://localhost/TheGalleryCafe/controller/getFood.php"
   );
@@ -16,10 +18,10 @@ async function getFood() {
 
   let foodCard = document.getElementById("item-food");
   let beverageCard = document.getElementById("item-beverage");
+
   data.forEach(function (el) {
     if (el.availability === "Yes") {
-      if (el.availability === "Yes") {
-        const cardHtml = `
+      const cardHtml = `
           <div class="card" style="width: 18rem; padding:2px; margin: 5px; background-color: #3c3831; color:#FFFDFC;">
             <img src="./../upload/${
               el.image
@@ -34,18 +36,87 @@ async function getFood() {
             </div>
           </div>`;
 
-        if (el.food_or_beverage === "food") {
-          htmlStrFood += cardHtml;
-        } else {
-          htmlStrBeverage += cardHtml;
+      if (el.food_or_beverage === "food") {
+        if (item === "" || item === "food") {
+          if (category === "" || el.category_name === category) {
+            htmlStrFood += cardHtml;
+          }
+        }
+      } else if (el.food_or_beverage === "beverage") {
+        if (item === "" || item === "beverage") {
+          if (category === "" || el.category_name === category) {
+            htmlStrBeverage += cardHtml;
+          }
         }
       }
     }
   });
 
-  foodCard.innerHTML = htmlStrFood;
-  beverageCard.innerHTML = htmlStrBeverage;
+  if (item === "" || item === "food") {
+    foodCard.innerHTML = htmlStrFood;
+  }
 
+  if (item === "" || item === "beverage") {
+    beverageCard.innerHTML = htmlStrBeverage;
+  }
+
+  document.querySelectorAll(".add-to-cart").forEach((button) => {
+    button.addEventListener("click", addToCart);
+  });
+}
+
+async function getCategory() {
+  const response = await fetch(
+    "http://localhost/TheGalleryCafe/controller/getCategory.php"
+  );
+  const data = await response.json();
+
+  let htmlStrFilterFood = "";
+  let htmlStrFilterBeverage = "";
+  let foodFilter = document.getElementById("food-filter");
+  let beverageFilter = document.getElementById("beverage-filter");
+
+  data.forEach(function (el) {
+    if (el.food_or_beverage === "food") {
+      htmlStrFilterFood += `<li onclick="getFood('${el.name}', 'food')">${el.name}</li>`;
+    } else {
+      htmlStrFilterBeverage += `<li onclick="getFood('${el.name}', 'beverage')">${el.name}</li>`;
+    }
+  });
+  foodFilter.innerHTML = `<li onclick="getFood()">All</li>` + htmlStrFilterFood;
+  beverageFilter.innerHTML =
+    `<li onclick="getFood()">All</li>` + htmlStrFilterBeverage;
+}
+
+async function getTable() {
+  const response = await fetch(
+    "http://localhost/TheGalleryCafe/controller/getTable.php"
+  );
+  const data = await response.json();
+
+  let htmlStr = "";
+  
+  let tableCard = document.getElementById("item-table");
+
+  data.forEach(function (el) {
+    
+    htmlStr += `
+               <div class="card" style="width: 18rem; padding:2px; margin: 5px; background-color: #3c3831; color:#FFFDFC;">
+            <img src="./../upload/${
+              el.image
+            }" class="card-img-top" alt="..." style="width:281px; height:225px; text-align: center;">
+            <div class="card-body">
+              <h5 class="card-title">${el.name}</h5>
+             
+              <button type="submit" class="btn btn-info add-to-cart" data-item='${JSON.stringify(
+                el
+              )}'><i class="bi bi-cart"> Add to Cart</i></button>
+            </div>
+          </div>`;
+               
+  });
+
+  tableCard.innerHTML = htmlStr;
   document.querySelectorAll(".add-to-cart").forEach((button) => {
     button.addEventListener("click", addToCart);
   });
@@ -58,8 +129,7 @@ function addToCart(event) {
     console.log("Item data:", itemData);
     const item = JSON.parse(itemData);
 
-    
-    const existingItem = cart.find(cartItem => cartItem.id === item.id);
+    const existingItem = cart.find((cartItem) => cartItem.id === item.id);
     if (existingItem) {
       alertMessage("Item already added to the cart");
     } else {
@@ -80,17 +150,19 @@ function updateCart() {
   let total = 0;
 
   cart.forEach((item, index) => {
-    
     let quantity = item.quantity != null ? item.quantity : 1;
+    let categoryName = item.category_name != null ? item.category_name : "Table";
 
     htmlStrCartItems += `
       <tr>
         <th scope="row">
           <div class="d-flex align-items-center">
-            <img src="./../upload/${item.image}" class="img-fluid rounded-3" style="width: 120px;" alt="Book">
+            <img src="./../upload/${
+              item.image
+            }" class="img-fluid rounded-3" style="width: 120px;" alt="Book">
             <div class="flex-column ms-4">
               <p class="mb-2">${item.name}</p>
-              <p class="mb-0">${item.food_or_beverage}</p>
+              <p class="mb-0">${categoryName}</p>
             </div>
           </div>
         </th>
@@ -109,7 +181,9 @@ function updateCart() {
           </div>
         </td>
         <td class="align-middle">
-          <p class="mb-0" style="font-weight: 500;">$${(item.price * quantity).toFixed(2)}</p>
+          <p class="mb-0" style="font-weight: 500;">$${(
+            item.price * quantity
+          ).toFixed(2)}</p>
         </td>
       </tr>`;
     total += parseFloat(item.price) * quantity;

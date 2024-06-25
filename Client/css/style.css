@@ -294,7 +294,7 @@
   }
 
   
-  .menu #menu-flters {
+  .menu .menu-flters {
     padding: 0;
     margin: 0 auto 0 auto;
     list-style: none;
@@ -302,7 +302,7 @@
     border-radius: 50px;
   }
   
-  .menu #menu-flters li {
+  .menu-flters li {
     cursor: pointer;
     display: inline-block;
     padding: 8px 12px 10px 12px;
@@ -316,11 +316,11 @@
     font-family: "Playfair Display", serif;
   }
   
-  .menu #menu-flters li:hover, .menu #menu-flters li.filter-active {
+  .menu .menu-flters li:hover, .menu .menu-flters li.filter-active {
     color: #cda45e;
   }
   
-  .menu #menu-flters li:last-child {
+  .menu .menu-flters li:last-child {
     margin-right: 0;
   }
   
