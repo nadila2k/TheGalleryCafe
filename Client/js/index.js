@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", async function () {
   getFood();
   getCategory();
   getTable();
+  setDefaultDate();
+  document.getElementById('datePicker').addEventListener('change', getTable);
 });
 
 let cart = [];
@@ -95,11 +97,12 @@ async function getTable() {
   const data = await response.json();
 
   let htmlStr = "";
-  
-  let tableCard = document.getElementById("item-table");
 
+  let tableCard = document.getElementById("item-table");
+  const selectedDate = document.getElementById('datePicker').value;
+  console.log(selectedDate);
   data.forEach(function (el) {
-    
+    el.selectedDate = selectedDate;
     htmlStr += `
                <div class="card" style="width: 18rem; padding:2px; margin: 5px; background-color: #3c3831; color:#FFFDFC;">
             <img src="./../upload/${
@@ -107,13 +110,12 @@ async function getTable() {
             }" class="card-img-top" alt="..." style="width:281px; height:225px; text-align: center;">
             <div class="card-body">
               <h5 class="card-title">${el.name}</h5>
-             
+              
               <button type="submit" class="btn btn-info add-to-cart" data-item='${JSON.stringify(
                 el
               )}'><i class="bi bi-cart"> Add to Cart</i></button>
             </div>
           </div>`;
-               
   });
 
   tableCard.innerHTML = htmlStr;
@@ -150,16 +152,17 @@ function updateCart() {
   let total = 0;
 
   cart.forEach((item, index) => {
+    let tblQty = item.qty;
+    let date = selectedDate;
     let quantity = item.quantity != null ? item.quantity : 1;
-    let categoryName = item.category_name != null ? item.category_name : "Table";
+    let categoryName =
+      item.category_name != null ? item.category_name : "Table";
 
     htmlStrCartItems += `
       <tr>
         <th scope="row">
           <div class="d-flex align-items-center">
-            <img src="./../upload/${
-              item.image
-            }" class="img-fluid rounded-3" style="width: 120px;" alt="Book">
+            <img src="./../upload/${item.image}" class="img-fluid rounded-3" style="width: 120px;" alt="Book">
             <div class="flex-column ms-4">
               <p class="mb-2">${item.name}</p>
               <p class="mb-0">${categoryName}</p>
@@ -168,25 +171,31 @@ function updateCart() {
         </th>
         <td class="align-middle">
           <button class="btn btn-danger remove-from-cart" data-index="${index}">Remove</button>
-        </td>
+        </td>`;
+
+    if (categoryName === "Table") {
+      htmlStrCartItems += `
         <td class="align-middle">
           <div class="d-flex flex-row">
-            <button class="btn btn-link px-2" onclick="decreaseQuantity(${index})">
-              <i class="fas fa-minus"></i>
-            </button>
+            <input min="1" max="${tblQty}" name="quantity" value="${quantity}" type="number" class="form-control form-control-sm" style="width: 50px;" data-index="${index}" onchange="updateItemQuantity(this)">
+          </div>
+        </td>`;
+    } else {
+      htmlStrCartItems += `
+        <td class="align-middle">
+          <div class="d-flex flex-row">
             <input min="1" name="quantity" value="${quantity}" type="number" class="form-control form-control-sm" style="width: 50px;" data-index="${index}" onchange="updateItemQuantity(this)">
-            <button class="btn btn-link px-2" onclick="increaseQuantity(${index})">
-              <i class="fas fa-plus"></i>
-            </button>
           </div>
         </td>
         <td class="align-middle">
           <p class="mb-0" style="font-weight: 500;">$${(
             item.price * quantity
           ).toFixed(2)}</p>
-        </td>
-      </tr>`;
-    total += parseFloat(item.price) * quantity;
+        </td>`;
+      total += parseFloat(item.price) * quantity;
+    }
+
+    htmlStrCartItems += `</tr>`;
   });
 
   cartItemsContainer.innerHTML = htmlStrCartItems;
@@ -212,6 +221,21 @@ function removeFromCart(event) {
   const index = event.currentTarget.dataset.index;
   cart.splice(index, 1);
   updateCart();
+}
+
+function setDefaultDate() {
+  today = new Date();
+
+  dd = String(today.getDate()).padStart(2, "0");
+  mm = String(today.getMonth() + 1).padStart(2, "0");
+  yyyy = today.getFullYear();
+
+  todayFormatted = yyyy + "-" + mm + "-" + dd;
+
+  datePicker = document.getElementById("datePicker");
+  datePicker.value = todayFormatted;
+
+  datePicker.min = todayFormatted;
 }
 
 function alertMessage(message, timeout = 3000) {

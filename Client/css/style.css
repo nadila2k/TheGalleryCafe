@@ -86,8 +86,20 @@
     box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
     transition: 0.3s;
     border-radius: 4px;
-    
+    width: 1000px;
+    left: 0px;
 }
+.h-100.h-custom {
+  padding: 0;
+}   
+.form-control[type="date"] {
+  background-color: white;
+  color: black;
+}
+.form-control {
+  width: 150px; 
+}
+
 .navbar .dropdown ul section{
   width: 100%;
 }
