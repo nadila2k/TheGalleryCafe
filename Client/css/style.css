@@ -100,6 +100,16 @@
   width: 150px; 
 }
 
+.search{
+  display: flex;
+  gap: 10px;
+  
+}
+.search .form-control{
+  width: 220px;
+}
+.search .
+
 .navbar .dropdown ul section{
   width: 100%;
 }

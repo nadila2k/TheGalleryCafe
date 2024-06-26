@@ -6,6 +6,11 @@
         <h1>Welcome to <span>Restaurantly</span></h1>
         <h2>Delivering great food for more than 18 years!</h2>
 
+        <div class="search">
+          <input type="text" class="form-control" placeholder="Have a question? Ask Now">
+          <a href="#menu" class="btn-menu animated fadeInUp scrollto">Search</a>
+        </div>
+
         <div class="btns">
           <a href="#menu" class="btn-menu animated fadeInUp scrollto">Our Menu</a>
           <a href="#book-a-table" class="btn-book animated fadeInUp scrollto">Book a Table</a>
@@ -68,10 +73,12 @@
       <p>Check Our Table</p>
       <br>
       <div class="mb-3">
-            <label for="datePicker" class="form-label"><h2>Select a date</h2></label>
-            <input type="date" class="form-control" id="datePicker" placeholder="Select a date">
-        </div>
-      
+        <label for="datePicker" class="form-label">
+          <h2>Select a date</h2>
+        </label>
+        <input type="date" class="form-control" id="datePicker" placeholder="Select a date">
+      </div>
+
     </div>
 
     <div class="row" data-aos="fade-up" data-aos-delay="100">
@@ -87,6 +94,26 @@
 
   </div>
 </section>
-
+<div class="modal fade" id="addPickDate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        <form id="get-date">
+          <div class="mb-3">
+            <label for="datePicker" class="form-label">
+              <h2>Select a date</h2>
+            </label>
+            <input type="date" class="form-control" id="getItemPickIpDate" placeholder="Select a date">
+          </div>
+          <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 <script src="js/index.js"></script>
 <?php include "partials/footer.php"; ?>

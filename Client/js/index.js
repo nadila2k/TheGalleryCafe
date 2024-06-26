@@ -4,7 +4,8 @@ document.addEventListener("DOMContentLoaded", async function () {
   getCategory();
   getTable();
   setDefaultDate();
-  document.getElementById('datePicker').addEventListener('change', getTable);
+  setDateInputDefaults();
+  document.getElementById("datePicker").addEventListener("change", getTable);
 });
 
 let cart = [];
@@ -101,7 +102,7 @@ async function getTable() {
   let htmlStr = "";
 
   let tableCard = document.getElementById("item-table");
-  const selectedDate = document.getElementById('datePicker').value;
+  const selectedDate = document.getElementById("datePicker").value;
   console.log(selectedDate);
   data.forEach(function (el) {
     el.selectedDate = selectedDate;
@@ -130,7 +131,7 @@ function addToCart(event) {
   try {
     const button = event.currentTarget;
     const itemData = button.dataset.item;
-    console.log("Item data:", itemData);
+    // console.log("Item data:", itemData);
     const item = JSON.parse(itemData);
 
     const existingItem = cart.find((cartItem) => cartItem.id === item.id);
@@ -152,7 +153,7 @@ function updateCart() {
   let htmlStrCartItems = "";
   let total = 0;
   itemArray = [];
-  tableArray = []; 
+  tableArray = [];
 
   cart.forEach((item, index) => {
     let tblQty = item.qty;
@@ -160,8 +161,7 @@ function updateCart() {
     let quantity = item.quantity != null ? item.quantity : 1;
     let categoryName =
       item.category_name != null ? item.category_name : "Table";
-      
-    
+
     htmlStrCartItems += `
       <tr>
         <th scope="row">
@@ -176,7 +176,6 @@ function updateCart() {
         <td class="align-middle">
           <button class="btn btn-danger remove-from-cart" data-index="${index}">Remove</button>
         </td>`;
-        
 
     if (categoryName === "Table") {
       htmlStrCartItems += `
@@ -186,15 +185,14 @@ function updateCart() {
           </div>
         </td>`;
 
-        tableArray.push({
-          id: item.id,
-          name: item.name,
-          category: categoryName,
-          image: item.image,
-          qty: tblQty,
-          date: date,
-          quantity: quantity
-        });
+      tableArray.push({
+        id: item.id,
+        name: item.name,
+        category: categoryName,
+        image: item.image,
+        date: date,
+        quantity: quantity,
+      });
     } else {
       htmlStrCartItems += `
         <td class="align-middle">
@@ -208,14 +206,14 @@ function updateCart() {
           ).toFixed(2)}</p>
         </td>`;
 
-        itemArray.push({
-          id: item.id,
-          name: item.name,
-          category: categoryName,
-          image: item.image,
-          price: item.price * quantity,
-          quantity: quantity
-        });
+      itemArray.push({
+        id: item.id,
+        name: item.name,
+        category: categoryName,
+        image: item.image,
+        price: item.price * quantity,
+        quantity: quantity,
+      });
       total += parseFloat(item.price) * quantity;
     }
 
@@ -225,21 +223,37 @@ function updateCart() {
   cartItemsContainer.innerHTML = htmlStrCartItems;
   cartTotalContainer.innerHTML = `$${total.toFixed(2)}`;
 
-  // console.log('Item Array:', itemArray);
-  // console.log('Table Array:', tableArray);
-
   document.querySelectorAll(".remove-from-cart").forEach((button) => {
     button.addEventListener("click", removeFromCart);
   });
-
-  
 }
 
+async function cartSubmit() {
+  if (tableArray.length === 0) {
+    let modalElement = document.getElementById("addPickDate");
+    let modalInstance = new bootstrap.Modal(modalElement);
 
-async function cartSubmit(itemArray, tableArray){
-  console.log('Item Array:', itemArray);
-  console.log('Table Array:', tableArray);
+    function getDateInput() {
+      return new Promise((resolve) => {
+        document.getElementById("get-date").addEventListener("submit", function (event) {
+          event.preventDefault();
+          let dateInput = document.getElementById("getItemPickIpDate").value;
+          console.log("Selected date:", dateInput);
+          modalInstance.hide();
+          resolve(dateInput);
+        });
+      });
+    }
+
+    modalInstance.show();
+    let dateInput = await getDateInput();
+    
+    
+  } else {
+    
+  }
 }
+
 
 function updateItemQuantity(input) {
   const index = input.dataset.index;
@@ -272,7 +286,12 @@ function setDefaultDate() {
 
   datePicker.min = todayFormatted;
 }
-
+function setDateInputDefaults() {
+  const today = new Date().toISOString().split("T")[0];
+  const dateInput = document.getElementById("getItemPickIpDate");
+  dateInput.min = today;
+  dateInput.value = today;
+}
 function alertMessage(message, timeout = 3000) {
   const alert = document.getElementById("alert");
 
