@@ -13,6 +13,8 @@ let itemArray = [];
 let tableArray = [];
 
 async function getFood(category = "", item = "", searchQuery = "") {
+  console.log("category",category)
+  console.log("getFood init");
   const response = await fetch(
     "http://localhost/TheGalleryCafe/controller/getFood.php"
   );
@@ -27,7 +29,8 @@ async function getFood(category = "", item = "", searchQuery = "") {
   data.forEach(function (el) {
     const name = el.name ? el.name.toLowerCase() : '';
     const type = el.type ? el.type.toLowerCase() : '';
-    const category = el.category ? el.category.toLowerCase() : '';
+    const categoryName = el.category_name ? el.category_name.toLowerCase() : '';
+    
     if (el.availability === "Yes") {
       const cardHtml = `
           <div class="card" style="width: 18rem; padding:2px; margin: 5px; background-color: #3c3831; color:#FFFDFC;">
@@ -43,13 +46,13 @@ async function getFood(category = "", item = "", searchQuery = "") {
               )}'><i class="bi bi-cart"> Add to Cart</i></button>
             </div>
           </div>`;
-
+          
       const matchesSearch =
         searchQuery === "" ||
         name.includes(searchQuery.toLowerCase()) ||
-        category.includes(searchQuery.toLowerCase())||
+        categoryName.includes(searchQuery.toLowerCase())||
         type.includes(searchQuery.toLowerCase());
-
+      
       if (matchesSearch) {
         if (el.food_or_beverage === "food") {
           if (item === "" || item === "food") {
@@ -94,9 +97,9 @@ async function getCategory() {
 
   data.forEach(function (el) {
     if (el.food_or_beverage === "food") {
-      htmlStrFilterFood += `<li onclick="getFood('${el.name}', 'food')">${el.name}</li>`;
+      htmlStrFilterFood += `<li onclick="getFood('${el.name}', 'food','')">${el.name}</li>`;
     } else {
-      htmlStrFilterBeverage += `<li onclick="getFood('${el.name}', 'beverage')">${el.name}</li>`;
+      htmlStrFilterBeverage += `<li onclick="getFood('${el.name}', 'beverage','')">${el.name}</li>`;
     }
   });
   foodFilter.innerHTML = `<li onclick="getFood()">All</li>` + htmlStrFilterFood;
