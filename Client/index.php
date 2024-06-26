@@ -7,8 +7,8 @@
         <h2>Delivering great food for more than 18 years!</h2>
 
         <div class="search">
-          <input type="text" class="form-control" placeholder="Have a question? Ask Now">
-          <a href="#menu" class="btn-menu animated fadeInUp scrollto">Search</a>
+          <input type="text" id="search-input" class="form-control" placeholder="Have a question? Ask Now">
+          <a href="#menu" id="search-btn" class="btn-menu animated fadeInUp scrollto">Search</a>
         </div>
 
         <div class="btns">

@@ -12,7 +12,7 @@ let cart = [];
 let itemArray = [];
 let tableArray = [];
 
-async function getFood(category = "", item = "") {
+async function getFood(category = "", item = "", searchQuery = "") {
   const response = await fetch(
     "http://localhost/TheGalleryCafe/controller/getFood.php"
   );
@@ -25,6 +25,9 @@ async function getFood(category = "", item = "") {
   let beverageCard = document.getElementById("item-beverage");
 
   data.forEach(function (el) {
+    const name = el.name ? el.name.toLowerCase() : '';
+    const type = el.type ? el.type.toLowerCase() : '';
+    const category = el.category ? el.category.toLowerCase() : '';
     if (el.availability === "Yes") {
       const cardHtml = `
           <div class="card" style="width: 18rem; padding:2px; margin: 5px; background-color: #3c3831; color:#FFFDFC;">
@@ -41,16 +44,24 @@ async function getFood(category = "", item = "") {
             </div>
           </div>`;
 
-      if (el.food_or_beverage === "food") {
-        if (item === "" || item === "food") {
-          if (category === "" || el.category_name === category) {
-            htmlStrFood += cardHtml;
+      const matchesSearch =
+        searchQuery === "" ||
+        name.includes(searchQuery.toLowerCase()) ||
+        category.includes(searchQuery.toLowerCase())||
+        type.includes(searchQuery.toLowerCase());
+
+      if (matchesSearch) {
+        if (el.food_or_beverage === "food") {
+          if (item === "" || item === "food") {
+            if (category === "" || el.category_name === category) {
+              htmlStrFood += cardHtml;
+            }
           }
-        }
-      } else if (el.food_or_beverage === "beverage") {
-        if (item === "" || item === "beverage") {
-          if (category === "" || el.category_name === category) {
-            htmlStrBeverage += cardHtml;
+        } else if (el.food_or_beverage === "beverage") {
+          if (item === "" || item === "beverage") {
+            if (category === "" || el.category_name === category) {
+              htmlStrBeverage += cardHtml;
+            }
           }
         }
       }
@@ -235,25 +246,23 @@ async function cartSubmit() {
 
     function getDateInput() {
       return new Promise((resolve) => {
-        document.getElementById("get-date").addEventListener("submit", function (event) {
-          event.preventDefault();
-          let dateInput = document.getElementById("getItemPickIpDate").value;
-          console.log("Selected date:", dateInput);
-          modalInstance.hide();
-          resolve(dateInput);
-        });
+        document
+          .getElementById("get-date")
+          .addEventListener("submit", function (event) {
+            event.preventDefault();
+            let dateInput = document.getElementById("getItemPickIpDate").value;
+            console.log("Selected date:", dateInput);
+            modalInstance.hide();
+            resolve(dateInput);
+          });
       });
     }
 
     modalInstance.show();
     let dateInput = await getDateInput();
-    
-    
   } else {
-    
   }
 }
-
 
 function updateItemQuantity(input) {
   const index = input.dataset.index;
@@ -305,3 +314,8 @@ function alertMessage(message, timeout = 3000) {
     alert.innerHTML = "";
   }, timeout);
 }
+
+document.getElementById("search-btn").addEventListener("click", function () {
+  const searchQuery = document.getElementById("search-input").value;
+  getFood("", "", searchQuery);
+});
