@@ -8,6 +8,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 
 let cart = [];
+let itemArray = [];
+let tableArray = [];
 
 async function getFood(category = "", item = "") {
   const response = await fetch(
@@ -147,20 +149,18 @@ function addToCart(event) {
 function updateCart() {
   const cartItemsContainer = document.getElementById("cart-details");
   const cartTotalContainer = document.getElementById("total");
-
   let htmlStrCartItems = "";
   let total = 0;
-  const itemArray = [];
-  const tableArray = [];
+  itemArray = [];
+  tableArray = []; 
 
   cart.forEach((item, index) => {
     let tblQty = item.qty;
     let date = item.selectedDate != null ? item.selectedDate : "";
-    
     let quantity = item.quantity != null ? item.quantity : 1;
     let categoryName =
       item.category_name != null ? item.category_name : "Table";
-    
+      
     
     htmlStrCartItems += `
       <tr>
@@ -232,15 +232,15 @@ function updateCart() {
     button.addEventListener("click", removeFromCart);
   });
 
-  cartSubmit(itemArray, tableArray);
   
 }
 
 
 async function cartSubmit(itemArray, tableArray){
-    console.log('Item Array:', itemArray);
-    console.log('Table Array:', tableArray);
+  console.log('Item Array:', itemArray);
+  console.log('Table Array:', tableArray);
 }
+
 function updateItemQuantity(input) {
   const index = input.dataset.index;
   const quantity = parseInt(input.value);
