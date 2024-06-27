@@ -11,10 +11,10 @@ document.addEventListener("DOMContentLoaded", async function () {
 let cart = [];
 let itemArray = [];
 let tableArray = [];
+let cartTotal = 0;
 
 async function getFood(category = "", item = "", searchQuery = "") {
-  console.log("category",category)
-  console.log("getFood init");
+ 
   const response = await fetch(
     "http://localhost/TheGalleryCafe/controller/getFood.php"
   );
@@ -178,15 +178,15 @@ function updateCart() {
 
     htmlStrCartItems += `
       <tr>
-        <th scope="row">
+        <td >
           <div class="d-flex align-items-center">
-            <img src="./../upload/${item.image}" class="img-fluid rounded-3" style="width: 120px;" alt="Book">
+            <img src="./../upload/${item.image}" alt="Book">
             <div class="flex-column ms-4">
               <p class="mb-2">${item.name}</p>
               <p class="mb-0">${categoryName}</p>
             </div>
           </div>
-        </th>
+        </td>
         <td class="align-middle">
           <button class="btn btn-danger remove-from-cart" data-index="${index}">Remove</button>
         </td>`;
@@ -219,7 +219,7 @@ function updateCart() {
             item.price * quantity
           ).toFixed(2)}</p>
         </td>`;
-
+        total += parseFloat(item.price) * quantity;
       itemArray.push({
         id: item.id,
         name: item.name,
@@ -227,13 +227,14 @@ function updateCart() {
         image: item.image,
         price: item.price * quantity,
         quantity: quantity,
+        
       });
-      total += parseFloat(item.price) * quantity;
+     
     }
 
     htmlStrCartItems += `</tr>`;
   });
-
+  cartTotal = total.toFixed(2);
   cartItemsContainer.innerHTML = htmlStrCartItems;
   cartTotalContainer.innerHTML = `$${total.toFixed(2)}`;
 
@@ -263,6 +264,8 @@ async function cartSubmit() {
 
     modalInstance.show();
     let dateInput = await getDateInput();
+    console.log(itemArray);
+    console.log(cartTotal);
   } else {
   }
 }

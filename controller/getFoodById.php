@@ -15,7 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             'name' => $row['name'],
             'category_id' => $row['category_id'],
             'type' => $row['type'],
-            'food_or_beverage' => $row['food_or_beverage'],
             'description' => $row['description'],
             'price' => $row['price'],
             'availability' => $row['availability'],

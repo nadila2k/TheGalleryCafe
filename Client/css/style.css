@@ -82,11 +82,10 @@
     z-index: 99;
     opacity: 0;
     visibility: hidden;
-    background: #fff;
     box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
     transition: 0.3s;
     border-radius: 4px;
-    width: 1000px;
+    width: 802px;
     left: 0px;
 }
 .h-100.h-custom {
@@ -108,7 +107,7 @@
 .search .form-control{
   width: 220px;
 }
-.search .
+
 
 .navbar .dropdown ul section{
   width: 100%;
@@ -116,6 +115,7 @@
 
 .navbar .dropdown ul li {
     min-width: 200px;
+    
 }
 
 .navbar .dropdown ul a {
@@ -170,8 +170,14 @@
     color: #fff;
   }
 
-
-
+  .table-responsive {
+    width: 800px;
+    
+}
+.cart-body img{
+ width: 120px;
+ height: 60px;
+}
 
   #hero {
     width: 100%;

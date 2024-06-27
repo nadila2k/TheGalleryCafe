@@ -113,12 +113,11 @@ async function editFood(id) {
     `http://localhost/TheGalleryCafe/controller/getFoodById.php?id=${id}`
   );
   const data = await response.json();
-
+  console.log(data);
   document.getElementById("update-id").value = data.id;
   document.getElementById("update-name").value = data.name;
   document.getElementById("update-category-el").value = data.category_id;
   document.getElementById("update-itemtype").value = data.type;
-
   document.getElementById("update-description").value = data.description;
   document.getElementById("update-price").value = data.price;
 
