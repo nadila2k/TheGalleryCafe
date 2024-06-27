@@ -197,6 +197,9 @@ function updateCart() {
           <div class="d-flex flex-row">
             <input min="1" max="${tblQty}" name="quantity" value="${quantity}" type="number" class="form-control form-control-sm" style="width: 50px;" data-index="${index}" onchange="updateItemQuantity(this)">
           </div>
+        </td>
+        <td class="align-middle">
+        
         </td>`;
 
       tableArray.push({
@@ -225,7 +228,7 @@ function updateCart() {
         name: item.name,
         category: categoryName,
         image: item.image,
-        price: item.price * quantity,
+        price: item.price,
         quantity: quantity,
         
       });
@@ -249,7 +252,7 @@ async function cartSubmit() {
     let modalInstance = new bootstrap.Modal(modalElement);
     modalInstance.show();
     
-    document.getElementById('cardAndDate').addEventListener('submit', function(e) {
+    document.getElementById('cardAndDate').addEventListener('submit', async function(e) {
       e.preventDefault(); 
 
       const date = document.getElementById('getItemPickIpDate').value;
@@ -264,6 +267,33 @@ async function cartSubmit() {
         alertMessage("Need a valid integer.");
       } else {
         modalInstance.hide();
+
+        const data = {
+          date: date,
+          cartTotal : cartTotal,
+          itemArray : itemArray
+        };
+  
+        const response = await fetch(
+          "http://localhost/TheGalleryCafe/controller/itemReservation.php",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          }
+        );
+  
+        const responseData = await response.json();
+        console.log(responseData);
+  
+        if (responseData.status === true) {
+          alertMessage(responseData.message);
+          getCategory();
+        } else {
+          alertMessage(responseData.message);
+        }
         
       }
     
@@ -272,7 +302,61 @@ async function cartSubmit() {
 
 
    
-  } else {
+  } else if(tableArray.length !== 0 && itemArray.length !== 0) {
+
+    let modalElement = document.getElementById("cardPayment");
+    let modalInstance = new bootstrap.Modal(modalElement);
+    modalInstance.show();
+    
+    document.getElementById('payment-form').addEventListener('submit', async function(e) {
+      e.preventDefault(); 
+
+      const cardNumber = document.getElementById('cardNumber').value;
+      const cardHolderName = document.getElementById('cardHolderName').value;
+      const expiration = document.getElementById('expiration').value;
+      const cvv = document.getElementById('Cvv').value;
+
+      if ( !cardNumber || !cardHolderName || !expiration || !cvv) {
+        alertMessage("Fields can't be empty");
+      } else if ((!Number.isInteger(Number(cardNumber))) || (!Number.isInteger(Number(expiration))) || (!Number.isInteger(Number(cvv)))) {
+        alertMessage("Need a valid integer.");
+      } else {
+        modalInstance.hide();
+
+        const data = {
+          cartTotal : cartTotal,
+          itemArray : itemArray,
+          tableArray : tableArray
+        };
+  
+        const response = await fetch(
+          "http://localhost/TheGalleryCafe/controller/itemReservation.php",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          }
+        );
+  
+        const responseData = await response.json();
+        console.log(responseData);
+  
+        if (responseData.status === true) {
+          alertMessage(responseData.message);
+          getCategory();
+        } else {
+          alertMessage(responseData.message);
+        }
+        
+      }
+    
+   
+    })
+    
+  }else{
+
   }
 }
 
