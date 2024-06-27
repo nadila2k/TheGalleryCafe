@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $imageRow = mysqli_fetch_assoc($imageQuery);
         $image = $imageRow['image'];
 
-        $sql = "UPDATE item SET name='$name', price='$price', category_id='$category', availability='$available', image='$image', type='$itemtype', food_or_beverage='$food_beverage', description='$description' WHERE id='$id'";
+        $sql = "UPDATE item SET name='$name', price='$price', category_id='$category', availability='$available', image='$image', type='$itemtype',  description='$description' WHERE id='$id'";
 
         if (mysqli_query($conn, $sql)) {
             $aResponse = [

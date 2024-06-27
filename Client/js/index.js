@@ -14,7 +14,6 @@ let tableArray = [];
 let cartTotal = 0;
 
 async function getFood(category = "", item = "", searchQuery = "") {
- 
   const response = await fetch(
     "http://localhost/TheGalleryCafe/controller/getFood.php"
   );
@@ -27,10 +26,10 @@ async function getFood(category = "", item = "", searchQuery = "") {
   let beverageCard = document.getElementById("item-beverage");
 
   data.forEach(function (el) {
-    const name = el.name ? el.name.toLowerCase() : '';
-    const type = el.type ? el.type.toLowerCase() : '';
-    const categoryName = el.category_name ? el.category_name.toLowerCase() : '';
-    
+    const name = el.name ? el.name.toLowerCase() : "";
+    const type = el.type ? el.type.toLowerCase() : "";
+    const categoryName = el.category_name ? el.category_name.toLowerCase() : "";
+
     if (el.availability === "Yes") {
       const cardHtml = `
           <div class="card" style="width: 18rem; padding:2px; margin: 5px; background-color: #3c3831; color:#FFFDFC;">
@@ -46,13 +45,13 @@ async function getFood(category = "", item = "", searchQuery = "") {
               )}'><i class="bi bi-cart"> Add to Cart</i></button>
             </div>
           </div>`;
-          
+
       const matchesSearch =
         searchQuery === "" ||
         name.includes(searchQuery.toLowerCase()) ||
-        categoryName.includes(searchQuery.toLowerCase())||
+        categoryName.includes(searchQuery.toLowerCase()) ||
         type.includes(searchQuery.toLowerCase());
-      
+
       if (matchesSearch) {
         if (el.food_or_beverage === "food") {
           if (item === "" || item === "food") {
@@ -145,10 +144,10 @@ function addToCart(event) {
   try {
     const button = event.currentTarget;
     const itemData = button.dataset.item;
-    // console.log("Item data:", itemData);
+    console.log("Item data:", itemData);
     const item = JSON.parse(itemData);
 
-    const existingItem = cart.find((cartItem) => cartItem.id === item.id);
+    const existingItem = cart.find((cartItem) => cartItem.name === item.name);
     if (existingItem) {
       alertMessage("Item already added to the cart");
     } else {
@@ -222,7 +221,7 @@ function updateCart() {
             item.price * quantity
           ).toFixed(2)}</p>
         </td>`;
-        total += parseFloat(item.price) * quantity;
+      total += parseFloat(item.price) * quantity;
       itemArray.push({
         id: item.id,
         name: item.name,
@@ -230,9 +229,7 @@ function updateCart() {
         image: item.image,
         price: item.price,
         quantity: quantity,
-        
       });
-     
     }
 
     htmlStrCartItems += `</tr>`;
@@ -251,112 +248,112 @@ async function cartSubmit() {
     let modalElement = document.getElementById("addPickDate");
     let modalInstance = new bootstrap.Modal(modalElement);
     modalInstance.show();
-    
-    document.getElementById('cardAndDate').addEventListener('submit', async function(e) {
-      e.preventDefault(); 
 
-      const date = document.getElementById('getItemPickIpDate').value;
-      const cardNumber = document.getElementById('cardNumber').value;
-      const cardHolderName = document.getElementById('cardHolderName').value;
-      const expiration = document.getElementById('expiration').value;
-      const cvv = document.getElementById('Cvv').value;
+    document
+      .getElementById("cardAndDate")
+      .addEventListener("submit", async function (e) {
+        e.preventDefault();
 
-      if (!date || !cardNumber || !cardHolderName || !expiration || !cvv) {
-        alertMessage("Fields can't be empty");
-      } else if ((!Number.isInteger(Number(cardNumber))) || (!Number.isInteger(Number(expiration))) || (!Number.isInteger(Number(cvv)))) {
-        alertMessage("Need a valid integer.");
-      } else {
-        modalInstance.hide();
+        const date = document.getElementById("getItemPickIpDate").value;
+        const cardNumber = document.getElementById("cardNumber").value;
+        const cardHolderName = document.getElementById("cardHolderName").value;
+        const expiration = document.getElementById("expiration").value;
+        const cvv = document.getElementById("Cvv").value;
 
-        const data = {
-          date: date,
-          cartTotal : cartTotal,
-          itemArray : itemArray
-        };
-  
-        const response = await fetch(
-          "http://localhost/TheGalleryCafe/controller/itemReservation.php",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          }
-        );
-  
-        const responseData = await response.json();
-        console.log(responseData);
-  
-        if (responseData.status === true) {
-          alertMessage(responseData.message);
-          getCategory();
+        if (!date || !cardNumber || !cardHolderName || !expiration || !cvv) {
+          alertMessage("Fields can't be empty");
+        } else if (
+          !Number.isInteger(Number(cardNumber)) ||
+          !Number.isInteger(Number(expiration)) ||
+          !Number.isInteger(Number(cvv))
+        ) {
+          alertMessage("Need a valid integer.");
         } else {
-          alertMessage(responseData.message);
+          modalInstance.hide();
+
+          const data = {
+            date: date,
+            cartTotal: cartTotal,
+            itemArray: itemArray,
+          };
+
+          const response = await fetch(
+            "http://localhost/TheGalleryCafe/controller/itemReservation.php",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            }
+          );
+
+          const responseData = await response.json();
+          console.log(responseData);
+
+          if (responseData.status === true) {
+            alertMessage(responseData.message);
+            getCategory();
+          } else {
+            alertMessage(responseData.message);
+          }
         }
-        
-      }
-    
-   
-    })
-
-
-   
-  } else if(tableArray.length !== 0 && itemArray.length !== 0) {
-
+      });
+  } else if (tableArray.length !== 0 && itemArray.length !== 0) {
     let modalElement = document.getElementById("cardPayment");
     let modalInstance = new bootstrap.Modal(modalElement);
     modalInstance.show();
-    
-    document.getElementById('payment-form').addEventListener('submit', async function(e) {
-      e.preventDefault(); 
 
-      const cardNumber = document.getElementById('cardNumber').value;
-      const cardHolderName = document.getElementById('cardHolderName').value;
-      const expiration = document.getElementById('expiration').value;
-      const cvv = document.getElementById('Cvv').value;
+    document
+      .getElementById("payment-form")
+      .addEventListener("submit", async function (e) {
+        e.preventDefault();
 
-      if ( !cardNumber || !cardHolderName || !expiration || !cvv) {
-        alertMessage("Fields can't be empty");
-      } else if ((!Number.isInteger(Number(cardNumber))) || (!Number.isInteger(Number(expiration))) || (!Number.isInteger(Number(cvv)))) {
-        alertMessage("Need a valid integer.");
-      } else {
-        modalInstance.hide();
+        const cardNumber = document.getElementById("cardNumber").value;
+        const cardHolderName = document.getElementById("cardHolderName").value;
+        const expiration = document.getElementById("expiration").value;
+        const cvv = document.getElementById("Cvv").value;
 
-        const data = {
-          cartTotal : cartTotal,
-          itemArray : itemArray,
-          tableArray : tableArray
-        };
-  
-        const response = await fetch(
-          "http://localhost/TheGalleryCafe/controller/itemReservation.php",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          }
-        );
-  
-        const responseData = await response.json();
-        console.log(responseData);
-  
-        if (responseData.status === true) {
-          alertMessage(responseData.message);
-          getCategory();
+        if (!cardNumber || !cardHolderName || !expiration || !cvv) {
+          alertMessage("Fields can't be empty");
+        } else if (
+          !Number.isInteger(Number(cardNumber)) ||
+          !Number.isInteger(Number(expiration)) ||
+          !Number.isInteger(Number(cvv))
+        ) {
+          alertMessage("Need a valid integer.");
         } else {
-          alertMessage(responseData.message);
-        }
-        
-      }
-    
-   
-    })
-    
-  }else{
+          modalInstance.hide();
 
+          const data = {
+            cartTotal: cartTotal,
+            itemArray: itemArray,
+            tableArray: tableArray,
+          };
+
+          const response = await fetch(
+            "http://localhost/TheGalleryCafe/controller/itemReservation.php",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            }
+          );
+
+          const responseData = await response.json();
+          console.log(responseData);
+
+          if (responseData.status === true) {
+            alertMessage(responseData.message);
+            getCategory();
+          } else {
+            alertMessage(responseData.message);
+          }
+        }
+      });
+  } else {
   }
 }
 
