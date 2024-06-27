@@ -247,25 +247,31 @@ async function cartSubmit() {
   if (tableArray.length === 0) {
     let modalElement = document.getElementById("addPickDate");
     let modalInstance = new bootstrap.Modal(modalElement);
-
-    function getDateInput() {
-      return new Promise((resolve) => {
-        document
-          .getElementById("get-date")
-          .addEventListener("submit", function (event) {
-            event.preventDefault();
-            let dateInput = document.getElementById("getItemPickIpDate").value;
-            console.log("Selected date:", dateInput);
-            modalInstance.hide();
-            resolve(dateInput);
-          });
-      });
-    }
-
     modalInstance.show();
-    let dateInput = await getDateInput();
-    console.log(itemArray);
-    console.log(cartTotal);
+    
+    document.getElementById('cardAndDate').addEventListener('submit', function(e) {
+      e.preventDefault(); 
+
+      const date = document.getElementById('getItemPickIpDate').value;
+      const cardNumber = document.getElementById('cardNumber').value;
+      const cardHolderName = document.getElementById('cardHolderName').value;
+      const expiration = document.getElementById('expiration').value;
+      const cvv = document.getElementById('Cvv').value;
+
+      if (!date || !cardNumber || !cardHolderName || !expiration || !cvv) {
+        alertMessage("Fields can't be empty");
+      } else if ((!Number.isInteger(Number(cardNumber))) || (!Number.isInteger(Number(expiration))) || (!Number.isInteger(Number(cvv)))) {
+        alertMessage("Need a valid integer.");
+      } else {
+        modalInstance.hide();
+        
+      }
+    
+   
+    })
+
+
+   
   } else {
   }
 }

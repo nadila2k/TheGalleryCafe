@@ -47,11 +47,7 @@
                         <td>Total</td>
                         <td></td>
                         <td></td>
-                        <td><button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block btn-lg" onclick="cartSubmit()">
-                            <div class="d-flex justify-content-between">
-                              <span>submit</span>
-                            </div>
-                          </button></td>
+                        <td><button type="button"  class="btn btn-primary btn-block btn-lg" onclick="cartSubmit()">Submit</button></td>
                       </tr>
                     </tfoot>
                   </table>
