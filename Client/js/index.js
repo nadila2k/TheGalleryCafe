@@ -38,7 +38,7 @@ async function getFood(category = "", item = "", searchQuery = "") {
             }" class="card-img-top" alt="..." style="width:281px; height:225px; text-align: center;">
             <div class="card-body">
               <h5 class="card-title">${el.name}</h5>
-              <h2>${el.price}</h2>
+              <h2>RS ${el.price}.00</h2>
               <p class="card-text">${el.description}</p>
               <button type="submit" class="btn btn-info add-to-cart" data-item='${JSON.stringify(
                 el
@@ -217,7 +217,7 @@ function updateCart() {
           </div>
         </td>
         <td class="align-middle">
-          <p class="mb-0" style="font-weight: 500;">$${(
+          <p class="mb-0" style="font-weight: 500;">RS ${(
             item.price * quantity
           ).toFixed(2)}</p>
         </td>`;
@@ -236,7 +236,7 @@ function updateCart() {
   });
   cartTotal = total.toFixed(2);
   cartItemsContainer.innerHTML = htmlStrCartItems;
-  cartTotalContainer.innerHTML = `$${total.toFixed(2)}`;
+  cartTotalContainer.innerHTML = `RS ${total.toFixed(2)}`;
 
   document.querySelectorAll(".remove-from-cart").forEach((button) => {
     button.addEventListener("click", removeFromCart);
@@ -293,7 +293,8 @@ async function cartSubmit() {
 
           if (responseData.status === true) {
             alertMessage(responseData.message);
-            getCategory();
+            clearArrays();
+            
           } else {
             alertMessage(responseData.message);
           }
@@ -309,11 +310,14 @@ async function cartSubmit() {
       .addEventListener("submit", async function (e) {
         e.preventDefault();
 
-        const cardNumber = document.getElementById("cardNumber").value;
-        const cardHolderName = document.getElementById("cardHolderName").value;
-        const expiration = document.getElementById("expiration").value;
-        const cvv = document.getElementById("Cvv").value;
-
+        const cardNumber = document.getElementById("cardNumberCardPayment").value;
+        const cardHolderName = document.getElementById("cardHolderNameCardPayment").value;
+        const expiration = document.getElementById("expirationCardPayment").value;
+        const cvv = document.getElementById("CvvCardPayment").value;
+        console.log("Card Number:", cardNumber);
+        console.log("Cardholder's Name:", cardHolderName);
+        console.log("Expiration:", expiration);
+        console.log("CVV:", cvv);
         if (!cardNumber || !cardHolderName || !expiration || !cvv) {
           alertMessage("Fields can't be empty");
         } else if (
@@ -347,13 +351,41 @@ async function cartSubmit() {
 
           if (responseData.status === true) {
             alertMessage(responseData.message);
-            getCategory();
+            clearArrays();
+            
           } else {
             alertMessage(responseData.message);
           }
         }
       });
   } else {
+
+    const data = {
+      tableArray: tableArray,
+    };
+
+    const response = await fetch(
+      "http://localhost/TheGalleryCafe/controller/itemReservation.php",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+
+    const responseData = await response.json();
+    console.log(responseData);
+
+    if (responseData.status === true) {
+      alertMessage(responseData.message);
+      clearArrays();
+      
+    } else {
+      alertMessage(responseData.message);
+    }
+
   }
 }
 
@@ -412,3 +444,12 @@ document.getElementById("search-btn").addEventListener("click", function () {
   const searchQuery = document.getElementById("search-input").value;
   getFood("", "", searchQuery);
 });
+
+function clearArrays() {
+  cart = [];
+  itemArray = [];
+  tableArray = [];
+  cartTotal = 0;
+  updateCart();
+
+}

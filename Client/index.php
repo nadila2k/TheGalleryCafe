@@ -129,34 +129,29 @@
 
 <div class="modal fade" id="cardPayment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form id="payment-form">
+                    <div class="form-outline mb-4 flex-container">
+                        <input type="text" class="form-control" id="cardNumberCardPayment" placeholder="Card Number">
+                        <img src="../assets/image/visa.png" alt="">
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="cardHolderNameCardPayment" placeholder="Cardholder's Name">
+                    </div>
+                    <div class="form-outline mb-4 flex-container">
+                        <input type="text" class="form-control" id="expirationCardPayment" placeholder="Expiration">
+                        <input type="text" class="form-control" id="CvvCardPayment" placeholder="Cvv">
+                    </div>
+                    <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block">Save</button>
+                </form>
+            </div>
         </div>
-        <div class="modal-body p-4">
-          <form id="payment-form">
-            <div class="mb-3">
-              <label for="datePicker" class="form-label">Select a date</label>
-              <input type="date" class="form-control" id="getItemPickIpDate" placeholder="Select a date">
-            </div>
-            <div class="form-outline mb-4 flex-container">
-              <input type="text" class="form-control" id="cardNumber" placeholder="Card Number">
-              <img src="../assets/image/visa.png" alt="">
-            </div>
-            <div class="mb-3">
-              <input type="text" class="form-control" id="cardHolderName" placeholder="Cardholder's Name">
-            </div>
-            <div class="form-outline mb-4 flex-container">
-              <input type="text" class="form-control" id="expiration" placeholder="Expiration">
-              <input type="text" class="form-control" id="Cvv" placeholder="Cvv">
-            </div>
-            <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block">Save</button>
-          </form>
-        </div>
-      </div>
     </div>
-  </div>
 </div>
 
 <script src="js/index.js"></script>
