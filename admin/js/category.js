@@ -149,6 +149,9 @@ document
     }
   });
 
+
+
+
 function alertMessage(message, timeout = 3000) {
   const alert = document.getElementById("alert");
 

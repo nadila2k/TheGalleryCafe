@@ -120,8 +120,8 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                Settings
+                            <a class="nav-link" href="events.php">
+                                Manage Event
                             </a>
                         </li>
                     </ul>

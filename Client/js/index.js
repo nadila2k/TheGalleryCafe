@@ -6,6 +6,10 @@ document.addEventListener("DOMContentLoaded", async function () {
   setDefaultDate();
   setDateInputDefaults();
   document.getElementById("datePicker").addEventListener("change", getTable);
+  slider();
+  getEvent();
+
+ 
 });
 
 let cart = [];
@@ -453,3 +457,60 @@ function clearArrays() {
   updateCart();
 
 }
+async function getEvent() {
+  const response = await fetch("http://localhost/TheGalleryCafe/controller/getEvent.php");
+  const data = await response.json();
+
+  let htmlStr = "";
+  let index = 0;
+  let eventDisplay = document.getElementById("event-Display");
+
+  data.forEach(function (el) {
+      index++;
+      htmlStr += `<div class="swiper-slide">
+                    <div class="row event-item" id="event-card">
+                        <div class="col-lg-6">
+                            <img src="./../upload/${el.image}" class="img-fluid" alt="">
+                        </div>
+                        <div class="col-lg-6 pt-4 pt-lg-0 content">
+                            <h3>${el.name}</h3>
+                            <div class="price">
+                                <p><span>${el.price}</span></p>
+                            </div>
+                            <p class="fst-italic">
+                            ${el.description}
+                            </p>
+                            <ul>
+                                <li><i class="bi bi-check-circled"></i> </li>
+                                <li><i class="bi bi-check-circled"></i>${el.include_items}</li>
+                                <li><i class="bi bi-check-circled"></i> </li>
+                            </ul>
+                            <p>
+                                Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                                reprehenderit in voluptate
+                                velit esse cillum dolore eu fugiat nulla pariatur
+                            </p>
+                        </div>
+                    </div>
+                </div>`;
+  });
+
+  eventDisplay.innerHTML = htmlStr;
+}
+function slider(){
+  new Swiper('.events-slider', {
+    speed: 600,
+    loop: true,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false
+    },
+    slidesPerView: 'auto',
+    pagination: {
+      el: '.swiper-pagination',
+      type: 'bullets',
+      clickable: true
+    }
+  });
+}
+
