@@ -5,7 +5,7 @@
     <br>
     <br>
     <button type="button" class="btn btn-primary  " data-bs-toggle="modal" data-bs-target="#userAddModal">
-        Add Category
+        Add user
     </button>
     <br>
     <div class="table-responsive">
@@ -16,6 +16,8 @@
                     <th>User Name</th>
                     <th>User Type</th>
                     <th>Password</th>
+                    <th>tel-Number</th>
+                    <th>Address</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -39,6 +41,16 @@
                     <div data-mdb-input-init class="form-outline mb-4">
                         <input type="" id="name" class="form-control" />
                         <label class="form-label" for="name">User Name</label>
+                    </div>
+                    
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <input type="" id="tp_number" class="form-control" />
+                        <label class="form-label" for="tp_number">tel-Number</label>
+                    </div>
+                    
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <input type="" id="Address" class="form-control" />
+                        <label class="form-label" for="Address">Address</label>
                     </div>
                     <div data-mdb-input-init class="form-outline mb-4">
                         <label class="form-label" for="userLevel">User Type</label>
@@ -81,6 +93,15 @@
                     <div data-mdb-input-init class="form-outline mb-4">
                         <input type="" id="edit-user-name" class="form-control" />
                         <label class="form-label" for="name">User Name</label>
+                    </div>
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <input type="" id="edit-user-tp_number" class="form-control" />
+                        <label class="form-label" for="to_number">tel-Number</label>
+                    </div>
+                    
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <input type="" id="edit-user-Address" class="form-control" />
+                        <label class="form-label" for="Address">Address</label>
                     </div>
                     <div data-mdb-input-init class="form-outline mb-4">
                         <label class="form-label" for="edit-user-userLevel">User Type</label>

@@ -70,8 +70,8 @@
       <a href="#book-a-table" class="book-a-table-btn scrollto d-none d-lg-flex">Book a table</a>
 
     </div>
-     <div id="alert"></div>
+     
   </header>
  
-
+  <div id="alert"></div>
  
