@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $total = mysqli_real_escape_string($conn, $cartData->cartTotal);
         $itemArray = $cartData->itemArray;
         $time = mysqli_real_escape_string($conn, $cartData->time);
-        $dineInOrTakeaway =
+        $dineInOrTakeaway =mysqli_real_escape_string($conn, $cartData->dineInOrTakeaway);
         $res = saveDataReservation($conn, $_SESSION['user_id'], $date, $total,$time,$dineInOrTakeaway);
         
 
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $tableArray = $cartData->tableArray;
         $date = $tableArray[0]->date;
         $time = mysqli_real_escape_string($conn, $cartData->time);
-        $dineInOrTakeaway = "Take away";
+        $dineInOrTakeaway = "dineIn";
         $res = saveDataReservation($conn, $_SESSION['user_id'], $date, $total,$time,$dineInOrTakeaway);
 
         if ($res === true) {
@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $date = $tableArray[0]->date;
         $total = 0;
         $time = mysqli_real_escape_string($conn, $cartData->time);
-        $dineInOrTakeaway = "Take away";
+        $dineInOrTakeaway = "dineIn";
         $res = saveDataReservation($conn, $_SESSION['user_id'], $date, $total,$time,$dineInOrTakeaway);
         if ($res === true) {
             $reservation_id = mysqli_insert_id($conn);
@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo json_encode($aResponse);
 }
 
-function saveDataReservation($conn, $user_id, $date, $total,$time)
+function saveDataReservation($conn, $user_id, $date, $total,$time,$dineInOrTakeaway)
 {
     $sql = "INSERT INTO reservation (client_id, status, date, total,time,dineInOrTakeaway) VALUES ('$user_id', 'No', '$date', '$total','$time','$dineInOrTakeaway')";
     return mysqli_query($conn, $sql);

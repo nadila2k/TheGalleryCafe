@@ -8,8 +8,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   document.getElementById("datePicker").addEventListener("change", getTable);
   getEvent();
   slider();
- 
-  
 });
 
 let cart = [];
@@ -245,7 +243,7 @@ function updateCart() {
 
 async function cartSubmit() {
   if (cart.length === 0) {
-    alertMessage("Cart is empty")
+    alertMessage("Cart is empty");
   } else {
     if (tableArray.length === 0) {
       let modalElement = document.getElementById("addPickDate");
@@ -263,10 +261,19 @@ async function cartSubmit() {
             document.getElementById("cardHolderName").value;
           const expiration = document.getElementById("expiration").value;
           const cvv = document.getElementById("Cvv").value;
-          const dineInOrTakeaway = document.getElementById("dineInOrTakeaway").value;
+          const dineInOrTakeaway =
+            document.getElementById("dineInOrTakeaway").value;
           const time = document.getElementById("time").value;
 
-          if (!date || !dineInOrTakeaway || !time || !cardNumber || !cardHolderName || !expiration || !cvv) {
+          if (
+            !date ||
+            !dineInOrTakeaway ||
+            !time ||
+            !cardNumber ||
+            !cardHolderName ||
+            !expiration ||
+            !cvv
+          ) {
             alertMessage("Fields can't be empty");
           } else if (
             !Number.isInteger(Number(cardNumber)) ||
@@ -284,7 +291,7 @@ async function cartSubmit() {
               dineInOrTakeaway: dineInOrTakeaway,
               time: time,
             };
-
+            console.log(data);
             const response = await fetch(
               "http://localhost/TheGalleryCafe/controller/itemReservation.php",
               {
@@ -316,7 +323,7 @@ async function cartSubmit() {
         .getElementById("payment-form")
         .addEventListener("submit", async function (e) {
           e.preventDefault();
-          const time = document.getElementById("time").value;
+          const time = document.getElementById("timeItemAndTable").value;
           const cardNumber = document.getElementById(
             "cardNumberCardPayment"
           ).value;
@@ -327,7 +334,7 @@ async function cartSubmit() {
             "expirationCardPayment"
           ).value;
           const cvv = document.getElementById("CvvCardPayment").value;
-         
+
           if (!cardNumber || !cardHolderName || !expiration || !cvv || !time) {
             alertMessage("Fields can't be empty");
           } else if (
@@ -343,7 +350,7 @@ async function cartSubmit() {
               cartTotal: cartTotal,
               itemArray: itemArray,
               tableArray: tableArray,
-              time : time
+              time: time,
             };
 
             const response = await fetch(
@@ -369,17 +376,16 @@ async function cartSubmit() {
           }
         });
     } else {
-
       let modalElement = document.getElementById("timeForTable");
       let modalInstance = new bootstrap.Modal(modalElement);
       modalInstance.show();
 
       document
-        .getElementById("payment-form")
+        .getElementById("getTimeTable-form")
         .addEventListener("submit", async function (e) {
           e.preventDefault();
-          const time = document.getElementById("time").value;
-         
+          const time = document.getElementById("timeTable").value;
+
           if (!time) {
             alertMessage("Fields can't be empty");
           } else {
@@ -387,9 +393,9 @@ async function cartSubmit() {
 
             const data = {
               tableArray: tableArray,
-              time:time
+              time: time,
             };
-      
+
             const response = await fetch(
               "http://localhost/TheGalleryCafe/controller/itemReservation.php",
               {
@@ -400,10 +406,10 @@ async function cartSubmit() {
                 body: JSON.stringify(data),
               }
             );
-      
+
             const responseData = await response.json();
             console.log(responseData);
-      
+
             if (responseData.status === true) {
               alertMessage(responseData.message);
               clearArrays();
@@ -412,9 +418,8 @@ async function cartSubmit() {
             }
           }
         });
-   
+    }
   }
-}
 }
 
 function updateItemQuantity(input) {
@@ -524,24 +529,23 @@ function clearArrays() {
   updateCart();
 }
 
-
 function slider() {
   const swiperContainer = document.querySelector(".events-slider");
   const slides = swiperContainer.querySelectorAll(".swiper-slide");
   const loop = slides.length > 1; // Enable loop only if there are more than one slide
 
   new Swiper(swiperContainer, {
-      speed: 600,
-      loop: loop,
-      autoplay: {
-          delay: 5000,
-          disableOnInteraction: false,
-      },
-      slidesPerView: "auto",
-      pagination: {
-          el: ".swiper-pagination",
-          type: "bullets",
-          clickable: true,
-      },
+    speed: 600,
+    loop: loop,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false,
+    },
+    slidesPerView: "auto",
+    pagination: {
+      el: ".swiper-pagination",
+      type: "bullets",
+      clickable: true,
+    },
   });
 }

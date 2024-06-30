@@ -192,10 +192,6 @@
                             <option value="Diner">Diner</option>
                         </select>
                     </div>
-                    <div class="mb-3">
-                        <label for="timePicker" class="form-label">Select a time</label>
-                        <input type="time" class="form-control" id="getItemPickTime" min="11:00" max="22:00">
-                    </div>
                     <div class="form-outline mb-4 flex-container">
                         <input type="text" class="form-control" id="cardNumber" placeholder="Card Number">
                         <img src="../assets/image/visa.png" alt="">
@@ -226,8 +222,8 @@
             <div class="modal-body p-4">
                 <form id="payment-form">
                     <div class="mb-3">
-                        <label class="form-label" for="time">time</label>
-                        <select name="" id="time">
+                        <label class="form-label" for="timeItemAndTable">time</label>
+                        <select name="" id="timeItemAndTable">
                             <option value="lunch">Lunch</option>
                             <option value="teaTime">Tea Time</option>
                             <option value="Diner">Diner</option>
@@ -263,8 +259,8 @@
             <div class="modal-body p-4">
                 <form id="getTimeTable-form">
                     <div class="mb-3">
-                        <label class="form-label" for="time">time</label>
-                        <select name="" id="time">
+                        <label class="form-label" for="timeTable">time</label>
+                        <select name="" id="timeTable">
                             <option value="lunch">Lunch</option>
                             <option value="teaTime">Tea Time</option>
                             <option value="Diner">Diner</option>
