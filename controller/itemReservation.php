@@ -15,8 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $date = mysqli_real_escape_string($conn, $cartData->date);
         $total = mysqli_real_escape_string($conn, $cartData->cartTotal);
         $itemArray = $cartData->itemArray;
-
-        $res = saveDataReservation($conn, $_SESSION['user_id'], $date, $total);
+        $time = mysqli_real_escape_string($conn, $cartData->time);
+        $dineInOrTakeaway =
+        $res = saveDataReservation($conn, $_SESSION['user_id'], $date, $total,$time,$dineInOrTakeaway);
+        
 
         if ($res === true) {
             $reservation_id = mysqli_insert_id($conn);
@@ -43,7 +45,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $itemArray = $cartData->itemArray;
         $tableArray = $cartData->tableArray;
         $date = $tableArray[0]->date;
-        $res = saveDataReservation($conn, $_SESSION['user_id'], $date, $total);
+        $time = mysqli_real_escape_string($conn, $cartData->time);
+        $dineInOrTakeaway = "Take away";
+        $res = saveDataReservation($conn, $_SESSION['user_id'], $date, $total,$time,$dineInOrTakeaway);
 
         if ($res === true) {
             $reservation_id = mysqli_insert_id($conn);
@@ -71,7 +75,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $tableArray = $cartData->tableArray;
         $date = $tableArray[0]->date;
         $total = 0;
-        $res = saveDataReservation($conn, $_SESSION['user_id'], $date, $total);
+        $time = mysqli_real_escape_string($conn, $cartData->time);
+        $dineInOrTakeaway = "Take away";
+        $res = saveDataReservation($conn, $_SESSION['user_id'], $date, $total,$time,$dineInOrTakeaway);
         if ($res === true) {
             $reservation_id = mysqli_insert_id($conn);
             $resTable = saveTableArray($conn, $tableArray, $reservation_id);
@@ -104,9 +110,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo json_encode($aResponse);
 }
 
-function saveDataReservation($conn, $user_id, $date, $total)
+function saveDataReservation($conn, $user_id, $date, $total,$time)
 {
-    $sql = "INSERT INTO reservation (client_id, status, date, total) VALUES ('$user_id', 'No', '$date', '$total')";
+    $sql = "INSERT INTO reservation (client_id, status, date, total,time,dineInOrTakeaway) VALUES ('$user_id', 'No', '$date', '$total','$time','$dineInOrTakeaway')";
     return mysqli_query($conn, $sql);
 }
 

@@ -6,10 +6,10 @@ document.addEventListener("DOMContentLoaded", async function () {
   setDefaultDate();
   setDateInputDefaults();
   document.getElementById("datePicker").addEventListener("change", getTable);
-  slider();
   getEvent();
-
+  slider();
  
+  
 });
 
 let cart = [];
@@ -36,10 +36,8 @@ async function getFood(category = "", item = "", searchQuery = "") {
 
     if (el.availability === "Yes") {
       const cardHtml = `
-          <div class="card" style="width: 18rem; padding:2px; margin: 5px; background-color: #3c3831; color:#FFFDFC;">
-            <img src="./../upload/${
-              el.image
-            }" class="card-img-top" alt="..." style="width:281px; height:225px; text-align: center;">
+          <div class="card">
+            <img src="./../upload/${el.image}" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">${el.name}</h5>
               <h2>RS ${el.price}.00</h2>
@@ -124,10 +122,8 @@ async function getTable() {
   data.forEach(function (el) {
     el.selectedDate = selectedDate;
     htmlStr += `
-               <div class="card" style="width: 18rem; padding:2px; margin: 5px; background-color: #3c3831; color:#FFFDFC;">
-            <img src="./../upload/${
-              el.image
-            }" class="card-img-top" alt="..." style="width:281px; height:225px; text-align: center;">
+               <div class="card" >
+            <img src="./../upload/${el.image}" class="card-img-top" alt="..." >
             <div class="card-body">
               <h5 class="card-title">${el.name}</h5>
               
@@ -248,149 +244,177 @@ function updateCart() {
 }
 
 async function cartSubmit() {
-  if (tableArray.length === 0) {
-    let modalElement = document.getElementById("addPickDate");
-    let modalInstance = new bootstrap.Modal(modalElement);
-    modalInstance.show();
-
-    document
-      .getElementById("cardAndDate")
-      .addEventListener("submit", async function (e) {
-        e.preventDefault();
-
-        const date = document.getElementById("getItemPickIpDate").value;
-        const cardNumber = document.getElementById("cardNumber").value;
-        const cardHolderName = document.getElementById("cardHolderName").value;
-        const expiration = document.getElementById("expiration").value;
-        const cvv = document.getElementById("Cvv").value;
-
-        if (!date || !cardNumber || !cardHolderName || !expiration || !cvv) {
-          alertMessage("Fields can't be empty");
-        } else if (
-          !Number.isInteger(Number(cardNumber)) ||
-          !Number.isInteger(Number(expiration)) ||
-          !Number.isInteger(Number(cvv))
-        ) {
-          alertMessage("Need a valid integer.");
-        } else {
-          modalInstance.hide();
-
-          const data = {
-            date: date,
-            cartTotal: cartTotal,
-            itemArray: itemArray,
-          };
-
-          const response = await fetch(
-            "http://localhost/TheGalleryCafe/controller/itemReservation.php",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(data),
-            }
-          );
-
-          const responseData = await response.json();
-          console.log(responseData);
-
-          if (responseData.status === true) {
-            alertMessage(responseData.message);
-            clearArrays();
-            
-          } else {
-            alertMessage(responseData.message);
-          }
-        }
-      });
-  } else if (tableArray.length !== 0 && itemArray.length !== 0) {
-    let modalElement = document.getElementById("cardPayment");
-    let modalInstance = new bootstrap.Modal(modalElement);
-    modalInstance.show();
-
-    document
-      .getElementById("payment-form")
-      .addEventListener("submit", async function (e) {
-        e.preventDefault();
-
-        const cardNumber = document.getElementById("cardNumberCardPayment").value;
-        const cardHolderName = document.getElementById("cardHolderNameCardPayment").value;
-        const expiration = document.getElementById("expirationCardPayment").value;
-        const cvv = document.getElementById("CvvCardPayment").value;
-        console.log("Card Number:", cardNumber);
-        console.log("Cardholder's Name:", cardHolderName);
-        console.log("Expiration:", expiration);
-        console.log("CVV:", cvv);
-        if (!cardNumber || !cardHolderName || !expiration || !cvv) {
-          alertMessage("Fields can't be empty");
-        } else if (
-          !Number.isInteger(Number(cardNumber)) ||
-          !Number.isInteger(Number(expiration)) ||
-          !Number.isInteger(Number(cvv))
-        ) {
-          alertMessage("Need a valid integer.");
-        } else {
-          modalInstance.hide();
-
-          const data = {
-            cartTotal: cartTotal,
-            itemArray: itemArray,
-            tableArray: tableArray,
-          };
-
-          const response = await fetch(
-            "http://localhost/TheGalleryCafe/controller/itemReservation.php",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(data),
-            }
-          );
-
-          const responseData = await response.json();
-          console.log(responseData);
-
-          if (responseData.status === true) {
-            alertMessage(responseData.message);
-            clearArrays();
-            
-          } else {
-            alertMessage(responseData.message);
-          }
-        }
-      });
+  if (cart.length === 0) {
+    alertMessage("Cart is empty")
   } else {
+    if (tableArray.length === 0) {
+      let modalElement = document.getElementById("addPickDate");
+      let modalInstance = new bootstrap.Modal(modalElement);
+      modalInstance.show();
 
-    const data = {
-      tableArray: tableArray,
-    };
+      document
+        .getElementById("cardAndDate")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
 
-    const response = await fetch(
-      "http://localhost/TheGalleryCafe/controller/itemReservation.php",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    );
+          const date = document.getElementById("getItemPickIpDate").value;
+          const cardNumber = document.getElementById("cardNumber").value;
+          const cardHolderName =
+            document.getElementById("cardHolderName").value;
+          const expiration = document.getElementById("expiration").value;
+          const cvv = document.getElementById("Cvv").value;
+          const dineInOrTakeaway = document.getElementById("dineInOrTakeaway").value;
+          const time = document.getElementById("time").value;
 
-    const responseData = await response.json();
-    console.log(responseData);
+          if (!date || !dineInOrTakeaway || !time || !cardNumber || !cardHolderName || !expiration || !cvv) {
+            alertMessage("Fields can't be empty");
+          } else if (
+            !Number.isInteger(Number(cardNumber)) ||
+            !Number.isInteger(Number(expiration)) ||
+            !Number.isInteger(Number(cvv))
+          ) {
+            alertMessage("Need a valid integer.");
+          } else {
+            modalInstance.hide();
 
-    if (responseData.status === true) {
-      alertMessage(responseData.message);
-      clearArrays();
-      
+            const data = {
+              date: date,
+              cartTotal: cartTotal,
+              itemArray: itemArray,
+              dineInOrTakeaway: dineInOrTakeaway,
+              time: time,
+            };
+
+            const response = await fetch(
+              "http://localhost/TheGalleryCafe/controller/itemReservation.php",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+              }
+            );
+
+            const responseData = await response.json();
+            console.log(responseData);
+
+            if (responseData.status === true) {
+              alertMessage(responseData.message);
+              clearArrays();
+            } else {
+              alertMessage(responseData.message);
+            }
+          }
+        });
+    } else if (tableArray.length !== 0 && itemArray.length !== 0) {
+      let modalElement = document.getElementById("cardPayment");
+      let modalInstance = new bootstrap.Modal(modalElement);
+      modalInstance.show();
+
+      document
+        .getElementById("payment-form")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+          const time = document.getElementById("time").value;
+          const cardNumber = document.getElementById(
+            "cardNumberCardPayment"
+          ).value;
+          const cardHolderName = document.getElementById(
+            "cardHolderNameCardPayment"
+          ).value;
+          const expiration = document.getElementById(
+            "expirationCardPayment"
+          ).value;
+          const cvv = document.getElementById("CvvCardPayment").value;
+         
+          if (!cardNumber || !cardHolderName || !expiration || !cvv || !time) {
+            alertMessage("Fields can't be empty");
+          } else if (
+            !Number.isInteger(Number(cardNumber)) ||
+            !Number.isInteger(Number(expiration)) ||
+            !Number.isInteger(Number(cvv))
+          ) {
+            alertMessage("Need a valid integer.");
+          } else {
+            modalInstance.hide();
+
+            const data = {
+              cartTotal: cartTotal,
+              itemArray: itemArray,
+              tableArray: tableArray,
+              time : time
+            };
+
+            const response = await fetch(
+              "http://localhost/TheGalleryCafe/controller/itemReservation.php",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+              }
+            );
+
+            const responseData = await response.json();
+            console.log(responseData);
+
+            if (responseData.status === true) {
+              alertMessage(responseData.message);
+              clearArrays();
+            } else {
+              alertMessage(responseData.message);
+            }
+          }
+        });
     } else {
-      alertMessage(responseData.message);
-    }
 
+      let modalElement = document.getElementById("timeForTable");
+      let modalInstance = new bootstrap.Modal(modalElement);
+      modalInstance.show();
+
+      document
+        .getElementById("payment-form")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+          const time = document.getElementById("time").value;
+         
+          if (!time) {
+            alertMessage("Fields can't be empty");
+          } else {
+            modalInstance.hide();
+
+            const data = {
+              tableArray: tableArray,
+              time:time
+            };
+      
+            const response = await fetch(
+              "http://localhost/TheGalleryCafe/controller/itemReservation.php",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+              }
+            );
+      
+            const responseData = await response.json();
+            console.log(responseData);
+      
+            if (responseData.status === true) {
+              alertMessage(responseData.message);
+              clearArrays();
+            } else {
+              alertMessage(responseData.message);
+            }
+          }
+        });
+   
   }
+}
 }
 
 function updateItemQuantity(input) {
@@ -408,6 +432,49 @@ function removeFromCart(event) {
   const index = event.currentTarget.dataset.index;
   cart.splice(index, 1);
   updateCart();
+}
+
+async function getEvent() {
+  const response = await fetch(
+    "http://localhost/TheGalleryCafe/controller/getEvent.php"
+  );
+  const data = await response.json();
+
+  let htmlStr = "";
+  let index = 0;
+  let eventDisplay = document.getElementById("event-Display");
+
+  data.forEach(function (el) {
+    index++;
+    htmlStr += `<div class="swiper-slide">
+                    <div class="row event-item" id="event-card">
+                        <div class="col-lg-6">
+                            <img src="./../upload/${el.image}" class="img-fluid" alt="">
+                        </div>
+                        <div class="col-lg-6 pt-4 pt-lg-0 content">
+                            <h3>${el.name}</h3>
+                            <div class="price">
+                                <p><span>${el.price}</span></p>
+                            </div>
+                            <p class="fst-italic">
+                            ${el.description}
+                            </p>
+                            <ul>
+                                
+                                <li><i class="bi bi-check-circled"></i>${el.include_items}</li>
+                                
+                            </ul>
+                            <p>
+                                Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                                reprehenderit in voluptate
+                                velit esse cillum dolore eu fugiat nulla pariatur
+                            </p>
+                        </div>
+                    </div>
+                </div>`;
+  });
+
+  eventDisplay.innerHTML = htmlStr;
 }
 
 function setDefaultDate() {
@@ -455,62 +522,26 @@ function clearArrays() {
   tableArray = [];
   cartTotal = 0;
   updateCart();
-
 }
-async function getEvent() {
-  const response = await fetch("http://localhost/TheGalleryCafe/controller/getEvent.php");
-  const data = await response.json();
 
-  let htmlStr = "";
-  let index = 0;
-  let eventDisplay = document.getElementById("event-Display");
 
-  data.forEach(function (el) {
-      index++;
-      htmlStr += `<div class="swiper-slide">
-                    <div class="row event-item" id="event-card">
-                        <div class="col-lg-6">
-                            <img src="./../upload/${el.image}" class="img-fluid" alt="">
-                        </div>
-                        <div class="col-lg-6 pt-4 pt-lg-0 content">
-                            <h3>${el.name}</h3>
-                            <div class="price">
-                                <p><span>${el.price}</span></p>
-                            </div>
-                            <p class="fst-italic">
-                            ${el.description}
-                            </p>
-                            <ul>
-                                <li><i class="bi bi-check-circled"></i> </li>
-                                <li><i class="bi bi-check-circled"></i>${el.include_items}</li>
-                                <li><i class="bi bi-check-circled"></i> </li>
-                            </ul>
-                            <p>
-                                Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                reprehenderit in voluptate
-                                velit esse cillum dolore eu fugiat nulla pariatur
-                            </p>
-                        </div>
-                    </div>
-                </div>`;
-  });
+function slider() {
+  const swiperContainer = document.querySelector(".events-slider");
+  const slides = swiperContainer.querySelectorAll(".swiper-slide");
+  const loop = slides.length > 1; // Enable loop only if there are more than one slide
 
-  eventDisplay.innerHTML = htmlStr;
-}
-function slider(){
-  new Swiper('.events-slider', {
-    speed: 600,
-    loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false
-    },
-    slidesPerView: 'auto',
-    pagination: {
-      el: '.swiper-pagination',
-      type: 'bullets',
-      clickable: true
-    }
+  new Swiper(swiperContainer, {
+      speed: 600,
+      loop: loop,
+      autoplay: {
+          delay: 5000,
+          disableOnInteraction: false,
+      },
+      slidesPerView: "auto",
+      pagination: {
+          el: ".swiper-pagination",
+          type: "bullets",
+          clickable: true,
+      },
   });
 }
-

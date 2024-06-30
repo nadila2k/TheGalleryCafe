@@ -174,10 +174,9 @@
 }
 
 .modal-content {
-  background-color:#444444;
+  background-color: #444444;
   color: #fff;
   width: 350px;
-
 }
 .modal-body {
   display: flex;
@@ -321,6 +320,18 @@ section {
 .container-fluid {
   width: 80%;
 }
+.card {
+  width: 15.988rem;
+  padding: 2px;
+  margin: 5px;
+  background-color: #3c3831;
+  color: #fffdfc;
+}
+.card img {
+  width: 250px;
+  height: 225px;
+  text-align: center;
+}
 .card-body {
   text-align: center;
 }
@@ -381,7 +392,6 @@ section {
   position: relative;
   padding: 80px 0;
   color: #ffffff;
-  
 }
 
 .about:before {
@@ -396,7 +406,7 @@ section {
 
 .about .about-img {
   position: relative;
-  transition: .5s;
+  transition: 0.5s;
 }
 
 .about .about-img img {
@@ -412,10 +422,10 @@ section {
   width: 60px;
   height: 60px;
   z-index: 1;
-  content: '';
+  content: "";
   border-left: 5px solid #cda45e;
   border-top: 5px solid #cda45e;
-  transition: .5s;
+  transition: 0.5s;
 }
 
 .about .about-img::after {
@@ -425,10 +435,10 @@ section {
   width: 60px;
   height: 60px;
   z-index: 2;
-  content: '';
+  content: "";
   border-right: 5px solid #cda45e;
   border-bottom: 5px solid #cda45e;
-  transition: .5s;
+  transition: 0.5s;
 }
 
 .about .about-img:hover {
@@ -469,7 +479,6 @@ section {
   margin-bottom: 0;
 }
 
-
 .events {
   background: url(../../assets/image/about-bg.jpg) center center no-repeat;
   background-size: cover;
@@ -477,7 +486,7 @@ section {
 }
 
 .events::before {
-  content: '';
+  content: "";
   background-color: rgba(0, 0, 0, 0.8);
   position: absolute;
   top: 0;
@@ -549,9 +558,14 @@ section {
   margin-top: 30px;
   position: relative;
 }
-#event-card p{
+#event-card p {
   width: 550px;
 }
+#event-card img {
+  width: 630px;
+  height: 420px;
+}
+
 
 .events .swiper-pagination .swiper-pagination-bullet {
   width: 12px;
