@@ -23,11 +23,15 @@
 
     }
     #alert {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 1050;
-    }
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1050;
+    max-width: 300px; /* Adjust width as needed */
+    word-wrap: break-word; /* Ensure long messages break to new lines */
+    overflow-y: auto; /* Enable vertical scroll if content overflows */
+}
+
     .gradient-custom-2 {
         background: #fccb90;
         background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);

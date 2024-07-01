@@ -1,5 +1,9 @@
 document.addEventListener("DOMContentLoaded", async function () {
-  console.log("helt ok!");
+  const message = localStorage.getItem('alertMessage');
+  if (message) {
+    alertMessage(message);
+    localStorage.removeItem('alertMessage');
+  }
 
 
 });
@@ -44,7 +48,7 @@ document.getElementById("form-login").addEventListener("submit", async function 
 
     }
   } else {
-    alert(responseData.message);
+    alertMessage(responseData.message);
   }
 
 });
@@ -60,7 +64,7 @@ document.getElementById("form-user").addEventListener("submit", async function (
   let address = document.getElementById("user_Address").value;
 
   let modalElement = document.getElementById("userAddModal");
-  let modalInstance = bootstrap.Modal.getInstance(modalElement);
+
 
   if (!name || !tpNumber || !password || !rePassword || !address) {
     alertMessage("All fields must be filled out!");
@@ -93,8 +97,12 @@ document.getElementById("form-user").addEventListener("submit", async function (
 
     const responseData = await response.json();
     if (responseData.status == true) {
-      alertMessage(responseData.message);
-      modalInstance.hide();
+      localStorage.setItem('alertMessage', responseData.message);
+      let modalElement = document.getElementById("userAddModal");
+      let modal = new bootstrap.Modal(modalElement);
+      modal.hide();
+      document.getElementById("form-user").reset();
+      location.reload();
 
     } else {
       alertMessage(responseData.message);
