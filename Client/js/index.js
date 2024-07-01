@@ -2,10 +2,10 @@ document.addEventListener("DOMContentLoaded", async function () {
   console.log("health ok!");
   getFood();
   getCategory();
-  getTable();
   setDefaultDate();
   setDateInputDefaults();
   document.getElementById("datePicker").addEventListener("change", getTable);
+  getTable();
   getEvent();
   slider();
 });
@@ -41,8 +41,8 @@ async function getFood(category = "", item = "", searchQuery = "") {
               <h2>RS ${el.price}.00</h2>
               <p class="card-text">${el.description}</p>
               <button type="submit" class="btn btn-info add-to-cart" data-item='${JSON.stringify(
-                el
-              )}'><i class="bi bi-cart"> Add to Cart</i></button>
+        el
+      )}'><i class="bi bi-cart"> Add to Cart</i></button>
             </div>
           </div>`;
 
@@ -107,27 +107,42 @@ async function getCategory() {
 }
 
 async function getTable() {
-  const response = await fetch(
-    "http://localhost/TheGalleryCafe/controller/getTable.php"
-  );
-  const data = await response.json();
+  const selectedDate = document.getElementById("datePicker").value;
+  console.log(selectedDate);
 
+  const data = {
+    date : selectedDate
+  };
+  console.log(data);
+  const response = await fetch(
+    "http://localhost/TheGalleryCafe/controller/getAvailableTable.php",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }
+  );
+
+  const responseData = await response.json();
+  console.log(responseData)
+  
   let htmlStr = "";
 
   let tableCard = document.getElementById("item-table");
-  const selectedDate = document.getElementById("datePicker").value;
-  console.log(selectedDate);
-  data.forEach(function (el) {
+
+  responseData.forEach(function (el) {
     el.selectedDate = selectedDate;
     htmlStr += `
                <div class="card" >
             <img src="./../upload/${el.image}" class="card-img-top" alt="..." >
             <div class="card-body">
               <h5 class="card-title">${el.name}</h5>
-              
+              <h2>avilebel :${el.qty}</h2>
               <button type="submit" class="btn btn-info add-to-cart" data-item='${JSON.stringify(
-                el
-              )}'><i class="bi bi-cart"> Add to Cart</i></button>
+      el
+    )}'><i class="bi bi-cart"> Add to Cart</i></button>
             </div>
           </div>`;
   });
@@ -216,8 +231,8 @@ function updateCart() {
         </td>
         <td class="align-middle">
           <p class="mb-0" style="font-weight: 500;">RS ${(
-            item.price * quantity
-          ).toFixed(2)}</p>
+          item.price * quantity
+        ).toFixed(2)}</p>
         </td>`;
       total += parseFloat(item.price) * quantity;
       itemArray.push({
@@ -309,6 +324,7 @@ async function cartSubmit() {
             if (responseData.status === true) {
               alertMessage(responseData.message);
               clearArrays();
+              getTable();
             } else {
               alertMessage(responseData.message);
             }
@@ -370,6 +386,7 @@ async function cartSubmit() {
             if (responseData.status === true) {
               alertMessage(responseData.message);
               clearArrays();
+              getTable();
             } else {
               alertMessage(responseData.message);
             }
@@ -413,6 +430,7 @@ async function cartSubmit() {
             if (responseData.status === true) {
               alertMessage(responseData.message);
               clearArrays();
+              getTable();
             } else {
               alertMessage(responseData.message);
             }
