@@ -181,15 +181,15 @@
                         <label class="form-label" for="dineInOrTakeaway">select</label>
                         <select name="" id="dineInOrTakeaway">
                             <option value="dineIn">Dine In</option>
-                            <option value="takeaway">Take away</option>
+                            <option value="Takeaway">Take away</option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="time">time</label>
                         <select name="" id="time">
-                            <option value="lunch">Lunch</option>
-                            <option value="teaTime">Tea Time</option>
-                            <option value="Diner">Diner</option>
+                            <option value="Lunch">Lunch</option>
+                            <option value="TeaTime">Tea Time</option>
+                            <option value="Dinner">Dinner</option>
                         </select>
                     </div>
                     <div class="form-outline mb-4 flex-container">

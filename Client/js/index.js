@@ -108,10 +108,9 @@ async function getCategory() {
 
 async function getTable() {
   const selectedDate = document.getElementById("datePicker").value;
-  console.log(selectedDate);
 
   const data = {
-    date : selectedDate
+    date: selectedDate
   };
   console.log(data);
   const response = await fetch(
@@ -126,25 +125,21 @@ async function getTable() {
   );
 
   const responseData = await response.json();
-  console.log(responseData)
   
   let htmlStr = "";
-
   let tableCard = document.getElementById("item-table");
 
   responseData.forEach(function (el) {
     el.selectedDate = selectedDate;
     htmlStr += `
-               <div class="card" >
-            <img src="./../upload/${el.image}" class="card-img-top" alt="..." >
-            <div class="card-body">
-              <h5 class="card-title">${el.name}</h5>
-              <h2>avilebel :${el.qty}</h2>
-              <button type="submit" class="btn btn-info add-to-cart" data-item='${JSON.stringify(
-      el
-    )}'><i class="bi bi-cart"> Add to Cart</i></button>
-            </div>
-          </div>`;
+      <div class="card">
+        <img src="./../upload/${el.image}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">${el.name}</h5>
+          <h6>Available: ${el.qty}</h6>
+          ${el.qty > 0 ? `<button type="submit" class="btn btn-info add-to-cart" data-item='${JSON.stringify(el)}'><i class="bi bi-cart"> Book</i></button>` : '<button type="submit" class="btn btn-secondary" disabled>All Booked</button>'}
+        </div>
+      </div>`;
   });
 
   tableCard.innerHTML = htmlStr;
@@ -152,6 +147,7 @@ async function getTable() {
     button.addEventListener("click", addToCart);
   });
 }
+
 
 function addToCart(event) {
   try {

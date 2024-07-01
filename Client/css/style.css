@@ -1,3 +1,6 @@
+body{
+  background-color: #0c0b09;
+}
 #header {
   background: rgba(12, 11, 9, 0.6);
   border-bottom: 1px solid rgba(12, 11, 9, 0.6);
@@ -657,3 +660,5 @@ section {
   font-size: 14px;
   color: #bab3a6;
 }
+
+
