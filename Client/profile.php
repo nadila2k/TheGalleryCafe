@@ -16,9 +16,9 @@
 
 <body>
     <div class=" container-fluid">
-    
+
     <div class="row">
-    <div id="alert"></div>
+        <div id="alert"></div>
         <nav class="col-md-2 d-none d-md-block sidebar">
             <div class="position-sticky pt-3">
                 <ul class="nav flex-column">
@@ -71,8 +71,8 @@
                             <div class="card-header">Account Details</div>
                             <div class="card-body">
                                 <form id="form-edit-user">
-                                <input type="hidden" id="userId" />
-                                <input type="hidden" id="type" />
+                                    <input type="hidden" id="userId" />
+                                    <input type="hidden" id="type" />
                                     <div class="mb-3">
                                         <label class="small mb-1" for="inputUsername">Username </label>
                                         <input class="form-control" id="inputUsername" type="text"
@@ -114,34 +114,41 @@
                     </div>
                 </div>
             </div>
-<br><br><br>
-            <div
-                class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2" id="oder">Reservations</h1>
-            </div>
-            <div class="content">
-    <div id="alert"></div>
-    <h2>Manage category</h2>
-    <br>
-
-    <button type="button" class="btn btn-primary  " data-bs-toggle="modal" data-bs-target="#tableAddModel">
-        Add Table
-    </button>
-    <br>
+            <br><br><br>
+            <div class="container" id="item">
+    <h2>Reservation Items</h2>
     <br>
     <div class="table-responsive">
         <table class="table table-dark table-striped table-sm">
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Reservation No</th>
-                    <th>Status</th>
-                    <th>Reservation Date</th>
+                    <th>Reservation table Name</th>
+                    <th>Quantity</th>
                     <th>Total</th>
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody id="tbl-table">
+            <tbody id="tbl-reservationViewItem">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="container" id="table">
+    <h2>Reservation Tables</h2>
+    <br>
+    <div class="table-responsive">
+        <table class="table table-dark table-striped table-sm">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Reservation table Name</th>
+                    <th>Quantity</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="tbl-reservationViewTable">
 
             </tbody>
         </table>

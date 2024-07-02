@@ -222,7 +222,7 @@ function updateCart() {
       htmlStrCartItems += `
         <td class="align-middle">
           <div class="d-flex flex-row">
-            <input min="1" name="quantity" value="${quantity}" type="number" class="form-control form-control-sm" style="width: 50px;" data-index="${index}" onchange="updateItemQuantity(this)">
+            <input min="1"  max="25" name="quantity" value="${quantity}" type="number" class="form-control form-control-sm" style="width: 50px;" data-index="${index}" onchange="updateItemQuantity(this)">
           </div>
         </td>
         <td class="align-middle">

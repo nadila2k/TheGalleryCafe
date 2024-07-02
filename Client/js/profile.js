@@ -2,7 +2,16 @@ document.addEventListener("DOMContentLoaded", async function () {
   console.log("health ok!");
   getUserData();
   getUserReservationData();
+  hideContainer();
 });
+
+let itemContainer = document.getElementById("item");
+let tableContainer = document.getElementById("table");
+
+function hideContainer() {
+  itemContainer.style.display = "none";
+  tableContainer.style.display = "none";
+}
 
 async function getUserData() {
   const response = await fetch(
@@ -12,7 +21,7 @@ async function getUserData() {
   console.log(data)
   document.getElementById('userId').value = data.id;
   document.getElementById('type').value = data.type;
-document.getElementById('inputUsername').value = data.name;
+    document.getElementById('inputUsername').value = data.name;
     document.getElementById('tp_number').value = data.tp_number;
     document.getElementById('address').value = data.address;
     document.getElementById('password').value = data.password;
@@ -78,36 +87,45 @@ document
     );
     const data = await response.json();
     console.log(data);
-
-  let htmlStr = "";
-  let index = 0;
-  let status ="";
-  let tbody = document.getElementById("tbl-table");
-
-  data.forEach(function (el) {
-    index++;
-    if (el.status == 0) {
+  
+    let htmlStr = "";
+    let index = 0;
+    let status = "";
+    let tbody = document.getElementById("tbl-table");
+  
+    data.forEach(function (el) {
+      index++;
+      if (el.status == 0) {
         status = "Pending";
-    } else if(el.status == 1) {
+      } else if (el.status == 1) {
         status = "Confirm";
-    }else{
+      } else if (el.status == 2) {
+        status = "Cancel by admin";
+      } else if (el.status == 3) {
         status = "Cancel";
-    }
-    htmlStr += `<tr>
-                 <td>${index}</td>
-                 <td>${el.id}</td>
-                 <td>${status}</td>
-                 <td>${el.date}</td>
-                 <td>${el.total}</td>
-               
-                 <td>
-                   <button type="button" class="btn btn-primary" onclick="cancelReservation(${el.id})">Cancel</button>
-                    
-               </td>`;
-  });
-
-  tbody.innerHTML = htmlStr;
-}
+      }
+  
+      htmlStr += `<tr>
+                   <td>${index}</td>
+                   <td>${el.id}</td>
+                   <td>${status}</td>
+                   <td>${el.date}</td>
+                   <td>RS.${el.total}.00</td>
+                   <td>`;
+  
+      // Conditionally add buttons based on status
+      if (el.status != 2 && el.status != 3) {
+        htmlStr += `
+                     <button type="button" class="btn btn-primary" onclick="cancelReservation(${el.id})">Cancel</button>
+                     <button type="button" class="btn btn-primary" onclick="viewReservationByID(${el.id})">View</button>`;
+      }
+  
+      htmlStr += `</td></tr>`;
+    });
+  
+    tbody.innerHTML = htmlStr;
+  }
+  
 
 
 async function cancelReservation(id) {
@@ -138,8 +156,118 @@ async function cancelReservation(id) {
   
   
 
-
-
+  async function viewReservationByID(id) {
+    let reservationId = id;
+    const data = {
+      id: reservationId,
+    };
+  
+    const response = await fetch(
+      "http://localhost/TheGalleryCafe/controller/viewReservationByID.php",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    const responseData = await response.json();
+    console.log(responseData);
+  
+    let htmlStrItem = "";
+    let htmlStrTable = "";
+    let indexItem = 0;
+    let indexTable = 0;
+    let tbodyItem = document.getElementById("tbl-reservationViewItem");
+    let tbodyTable = document.getElementById("tbl-reservationViewTable");
+  
+    if (
+      responseData.reservationTable.length === 0 &&
+      responseData.reservationItem.length > 0
+    ) {
+      hideContainer();
+      responseData.reservationItem.forEach(function (el) {
+        indexItem++;
+        htmlStrItem += `<tr>
+                     <td>${indexItem}</td>
+                     <td>${el.item_name}</td>
+                     <td>${el.cart_qty}</td>
+                     <td>${el.cart_qty * el.item_price}</td>
+                     <td>
+                       <button type="button" class="btn btn-primary" onclick="removeItem(${
+                         el.cart_item_id
+                       },${
+          el.total_cost - el.cart_qty * el.item_price
+        },${reservationId})">Remove</button>
+                     </td>
+                   </tr>`;
+      });
+  
+      tbodyItem.innerHTML = htmlStrItem;
+      itemContainer.style.display = "block";
+    } else if (
+      responseData.reservationTable.length > 0 &&
+      responseData.reservationItem.length === 0
+    ) {
+      hideContainer();
+      responseData.reservationTable.forEach(function (el) {
+        indexTable++;
+        htmlStrTable += `<tr>
+                       <td>${indexTable}</td>
+                       <td>${el.table_name}</td>
+                       <td>${el.table_qty}</td>
+                       <td>
+                         <button type="button" class="btn btn-primary" onclick="removeTable(${el.cart_table_id},${reservationId})">Remove</button>
+                       </td>
+                     </tr>`;
+      });
+  
+      tbodyTable.innerHTML = htmlStrTable;
+      tableContainer.style.display = "block";
+    } else if (
+      responseData.reservationTable.length > 0 &&
+      responseData.reservationItem.length > 0
+    ) {
+      hideContainer();
+  
+      responseData.reservationItem.forEach(function (el) {
+        indexItem++;
+        htmlStrItem += `<tr>
+                     <td>${indexItem}</td>
+                     <td>${el.item_name}</td>
+                     <td>${el.cart_qty}</td>
+                     <td>${el.cart_qty * el.item_price}</td>
+                     <td>
+                      <button type="button" class="btn btn-primary" onclick="removeItem(${
+                        el.cart_item_id
+                      },${
+          el.total_cost - el.cart_qty * el.item_price
+        },${reservationId})">Remove</button>
+                     </td>
+                   </tr>`;
+      });
+  
+      responseData.reservationTable.forEach(function (el) {
+        indexTable++;
+        htmlStrTable += `<tr>
+                       <td>${indexTable}</td>
+                       <td>${el.table_name}</td>
+                       <td>${el.table_qty}</td>
+                       <td>
+                         <button type="button" class="btn btn-primary" onclick="removeTable(${el.cart_table_id},${reservationId})">Remove</button>
+                       </td>
+                     </tr>`;
+      });
+  
+      tbodyItem.innerHTML = htmlStrItem;
+      tbodyTable.innerHTML = htmlStrTable;
+      itemContainer.style.display = "block";
+      tableContainer.style.display = "block";
+    }else{
+      alertMessage("Cart Items Are Empty");
+    }
+  }
 
 
   function alertMessage(message, timeout = 3000) {

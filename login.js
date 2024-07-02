@@ -40,7 +40,7 @@ document.getElementById("form-login").addEventListener("submit", async function 
         window.location.href = "./admin/index.php";
         break;
       case '2':
-        window.location.href = "staff.php";
+        window.location.href = "./staff/index.php";
         break;
       case '3':
         window.location.href = "./Client/index.php";
