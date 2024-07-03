@@ -69,6 +69,7 @@ document
 
         if (responseData.status === true) {
           alertMessage(responseData.message);
+          document.getElementById("form-food").reset();
           getFood();
         } else {
           alertMessage(responseData.message);

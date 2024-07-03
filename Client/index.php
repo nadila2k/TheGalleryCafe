@@ -111,7 +111,7 @@
 
         <div class="section-title">
             <h2>Events</h2>
-            <p>Organize Your Events in our Restaurant</p>
+            <p> Events in our Restaurant</p>
         </div>
 
         <div class="events-slider swiper-container" data-aos="fade-up" data-aos-delay="100">

@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
     $description = $_POST['description'];
     $price = $_POST['price'];
-    $includeItem = $_POST['include_item'];
+   
 
     // Check if an image is uploaded
     if (!empty($_FILES['image']['name'])) {
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         unlink("../upload/$oldImage");
 
                         
-                        $sql = "UPDATE events SET name='$name', description='$description', price='$price', include_items='$includeItem', image='$imageNewName' WHERE id='$id'";
+                        $sql = "UPDATE events SET name='$name', description='$description', price='$price', image='$imageNewName' WHERE id='$id'";
 
                         if (mysqli_query($conn, $sql)) {
                             $aResponse = [
@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     } else {
         // No new image uploaded, update other fields only
-        $sql = "UPDATE events SET name='$name', description='$description', price='$price', include_items='$includeItem' WHERE id='$id'";
+        $sql = "UPDATE events SET name='$name', description='$description', price='$price' WHERE id='$id'";
 
         if (mysqli_query($conn, $sql)) {
             $aResponse = [

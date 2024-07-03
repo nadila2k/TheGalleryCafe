@@ -1,3 +1,4 @@
+<?php include './../controller/check_session.php';?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,7 +18,7 @@
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
-            <nav class="col-md-2 d-none d-md-block sidebar">
+            <nav class="col-md-2 d-none d-md-block sidebar" id="navBar">
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
                         <li class="nav-item">

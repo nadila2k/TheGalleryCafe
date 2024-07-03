@@ -3,10 +3,10 @@
 <div id="alert"></div>
 <h2>Manage Food</h2>
 <br>
-<br>
 <button type="button" class="btn btn-primary  " data-bs-toggle="modal" data-bs-target="#foodAddModal">
     Add Food
 </button>
+<br>
 <br>
 <div class="table-responsive">
     <table class="table table-dark table-striped table-sm">

@@ -3,10 +3,13 @@ body {
     background-color: black;
     color: white;
 }
-
+#navBar{
+    
+}
 .sidebar {
     height: 100vh;
     background-color: #343a40;
+    position: sticky;
 }
 
 .sidebar .nav-link {

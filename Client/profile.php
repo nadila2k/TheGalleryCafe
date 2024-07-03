@@ -115,7 +115,32 @@
                 </div>
             </div>
             <br><br><br>
-            <div class="container" id="item">
+            <div class="content">
+    <div id="alert"></div>
+    <h2>Manage Reservation</h2>
+    <br>
+    <div class="table-responsive">
+        <table class="table table-dark table-striped table-sm">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Reservation No</th>
+                    <th></th>
+                    <th>Reservation Date</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="tbl-table">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<div class="container" id="item">
     <h2>Reservation Items</h2>
     <br>
     <div class="table-responsive">
@@ -153,6 +178,11 @@
             </tbody>
         </table>
     </div>
+</div>
+
+
+
+
 </div>
         </main>
 

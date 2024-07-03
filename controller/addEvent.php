@@ -6,11 +6,11 @@ $aResponse = [
 ];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['name'], $_POST['description'], $_POST['price'], $_POST['include_item'], $_FILES['image'])) {
+    if (isset($_POST['name'], $_POST['description'], $_POST['price'],  $_FILES['image'])) {
         $name = $_POST['name'];
         $description = $_POST['description'];
         $price = $_POST['price'];
-        $includeItem = $_POST['include_item'];
+     
 
         $image = $_FILES['image'];
         $imageName = $image['name'];
@@ -29,8 +29,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $imagePath = '../upload/' . $imageNewName;
 
                     if (move_uploaded_file($imageTmpName, $imagePath)) {
-                        $sql = "INSERT INTO events (name, image, description, price, include_items) 
-                                VALUES ('$name', '$imageNewName', '$description', '$price', '$includeItem')";
+                        $sql = "INSERT INTO events (name, image, description, price) 
+                        VALUES ('$name', '$imageNewName', '$description', '$price')";
+                
                         $res = mysqli_query($conn, $sql);
 
                         if ($res === true) {

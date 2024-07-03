@@ -473,20 +473,13 @@ async function getEvent() {
                         <div class="col-lg-6 pt-4 pt-lg-0 content">
                             <h3>${el.name}</h3>
                             <div class="price">
-                                <p><span>${el.price}</span></p>
+                                <p><span>RS.${el.price}.00</span></p>
                             </div>
+                            <br />
+                            <br />
+                            <br />
                             <p class="fst-italic">
                             ${el.description}
-                            </p>
-                            <ul>
-                                
-                                <li><i class="bi bi-check-circled"></i>${el.include_items}</li>
-                                
-                            </ul>
-                            <p>
-                                Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                reprehenderit in voluptate
-                                velit esse cillum dolore eu fugiat nulla pariatur
                             </p>
                         </div>
                     </div>

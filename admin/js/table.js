@@ -41,6 +41,7 @@ document
 
         if (responseData.status === true) {
           alertMessage(responseData.message);
+          document.getElementById("form-table").reset();
           getTable();
         } else {
           alertMessage(responseData.message);

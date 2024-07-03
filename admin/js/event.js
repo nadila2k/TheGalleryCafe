@@ -11,21 +11,20 @@ document.addEventListener("DOMContentLoaded", async function () {
       const name = document.getElementById("name").value.trim();
       const description = document.getElementById("description").value.trim();
       const price = document.getElementById("price").value.trim();
-      const includeItem = document.getElementById("include_item").value.trim();
       const image = document.getElementById("image").files[0];
   
       let modalElement = document.getElementById("eventAddModal");
       let modalInstance = bootstrap.Modal.getInstance(modalElement);
       modalInstance.hide();
   
-      if (!name || !description || !price || !includeItem || !image) {
+      if (!name || !description || !price || !image) {
         alertMessage("Text field name cannot be empty");
       } else {
         const formData = new FormData();
         formData.append("name", name);
         formData.append("description", description);
         formData.append("price", price);
-        formData.append("include_item", includeItem);
+       
         formData.append("image", image);
   
         const response = await fetch(
@@ -63,7 +62,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                            <td>${el.name}</td>
                            <td>${el.price}</td>
                            <td>${el.description}</td>
-                           <td>${el.include_items}</td>
                            <td class="tbl-img"><img src="./../upload/${el.image}" alt="Image of ${el.name}"></td>
                            <td>
                              <button type="button" class="btn btn-primary" onclick="deleteEvent(${el.id})">Delete</button>
@@ -86,7 +84,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.getElementById("edit-name").value = data.name;
     document.getElementById("edit-description").value = data.description;
     document.getElementById("edit-price").value = data.price;
-    document.getElementById("edit-include_item").value = data.include_item;
+
       
         let modalElement = document.getElementById("eventEditModal");
         let modalInstance = new bootstrap.Modal(modalElement);
@@ -102,14 +100,14 @@ document.addEventListener("DOMContentLoaded", async function () {
         const name = document.getElementById("edit-name").value.trim();
         const description = document.getElementById("edit-description").value.trim();
         const price = document.getElementById("edit-price").value.trim();
-        const includeItem = document.getElementById("edit-include_item").value.trim();
+    
         const image = document.getElementById("edit-image").files[0];
     
         let modalElement = document.getElementById("eventEditModal");
         let modalInstance = bootstrap.Modal.getInstance(modalElement);
         modalInstance.hide();
     
-        if (!name || !description || !price || !includeItem) {
+        if (!name || !description || !price ) {
             alert("All fields except the image are required.");
             return;
         }
@@ -119,9 +117,15 @@ document.addEventListener("DOMContentLoaded", async function () {
         formData.append("name", name);
         formData.append("description", description);
         formData.append("price", price);
-        formData.append("include_item", includeItem);
+        console.log(formData);
+     
         if (image) formData.append("image", image);
-    
+
+        console.log("ID:", formData.get("id"));
+console.log("Name:", formData.get("name"));
+console.log("Description:", formData.get("description"));
+console.log("Price:", formData.get("price"));
+   
         const response = await fetch(
             "http://localhost/TheGalleryCafe/controller/updateEvent.php",
             {

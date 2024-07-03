@@ -17,7 +17,6 @@
                     <th>Event Name</th>
                     <th>price</th>
                     <th>Description</th>
-                    <th>include Item</th>
                     <th>Image</th>
                     
                     <th>Action</th>
@@ -42,7 +41,7 @@
                 
                     <div data-mdb-input-init class="form-outline mb-4">
                         <input type="" id="name" class="form-control" />
-                        <label class="form-label" for="name">Table Name</label>
+                        <label class="form-label" for="name">Event Name</label>
                     </div>
                     <div data-mdb-input-init class="form-outline mb-4">
                         <input type="" id="description" class="form-control" />
@@ -51,10 +50,6 @@
                     <div data-mdb-input-init class="form-outline mb-4">
                         <input type="" id="price" class="form-control" />
                         <label class="form-label" for="price">price </label>
-                    </div>
-                    <div data-mdb-input-init class="form-outline mb-4">
-                        <input type="" id="include_item" class="form-control" />
-                        <label class="form-label" for="include_item">Include Items </label>
                     </div>
                     <div data-mdb-input-init class="form-outline mb-4">
                         <input type="file" id="image" class="form-control" />
@@ -85,7 +80,7 @@
                     </div>
                     <div data-mdb-input-init class="form-outline mb-4">
                         <input type="text" id="edit-name" class="form-control" />
-                        <label class="form-label" for="edit-name">Table Name</label>
+                        <label class="form-label" for="edit-name">Event Name</label>
                     </div>
                     <div data-mdb-input-init class="form-outline mb-4">
                         <input type="text" id="edit-description" class="form-control" />
@@ -94,10 +89,6 @@
                     <div data-mdb-input-init class="form-outline mb-4">
                         <input type="text" id="edit-price" class="form-control" />
                         <label class="form-label" for="edit-price">Price</label>
-                    </div>
-                    <div data-mdb-input-init class="form-outline mb-4">
-                        <input type="text" id="edit-include_item" class="form-control" />
-                        <label class="form-label" for="edit-include_item">Include Items</label>
                     </div>
                     <div data-mdb-input-init class="form-outline mb-4">
                         <input type="file" id="edit-image" class="form-control" />
