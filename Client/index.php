@@ -10,7 +10,7 @@
                 <h2>Delivering great food for more than 18 years!</h2>
 
                 <div class="search">
-                    <input type="text" id="search-input" class="form-control" placeholder="Have a question? Ask Now">
+                    <input type="text" id="search-input" class="form-control" placeholder="Looking for Food?">
                     <a href="#menu" id="search-btn" class="btn-menu animated fadeInUp scrollto">Search</a>
                 </div>
 
@@ -151,7 +151,87 @@
 </section>
 
 
+<section id="gallery" class="gallery">
 
+      <div class="container" data-aos="fade-up">
+        <div class="section-title">
+          <h2>Gallery</h2>
+          <p>Some photos from Our Restaurant</p>
+        </div>
+      </div>
+
+      <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row g-0">
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              <a href="../assets/image/gallery-1.jpg" class="gallery-lightbox" data-gall="gallery-item">
+                <img src="../assets/image/gallery-1.jpg" alt="" class="img-fluid">
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              <a href="../assets/image/gallery-2.jpg" class="gallery-lightbox" data-gall="gallery-item">
+                <img src="../assets/image/gallery-2.jpg" alt="" class="img-fluid">
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              
+                <img src="../assets/image/gallery-3.jpg" alt="" class="img-fluid">
+              
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              
+                <img src="../assets/image/gallery-4.jpg" alt="" class="img-fluid">
+              
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              
+                <img src="../assets/image/gallery-5.jpg" alt="" class="img-fluid">
+             
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              
+                <img src="../assets/image/gallery-6.jpg" alt="" class="img-fluid">
+              
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              
+                <img src="../assets/image/gallery-7.jpg" alt="" class="img-fluid">
+             
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+             
+                <img src="../assets/image/gallery-8.jpg" alt="" class="img-fluid">
+              
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
 
 
 

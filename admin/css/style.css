@@ -61,10 +61,10 @@ body {
     width: 150px;
     height: 150px;
     object-fit: cover;
-    /* Ensures the image covers the entire 150x150 area */
+    
 }
 
-/* Style for the toggle icon */
+
 .field-icon {
     float: right;
     margin-left: -25px;
@@ -83,3 +83,16 @@ body {
     right: 20px;
     z-index: 1050;
   }
+  .sidebar {
+    
+    position: sticky;
+    top: 0;
+    height: 100vh; 
+    overflow-y: auto; 
+    
+}
+
+.main-content {
+    margin-left: 0px; 
+    
+}

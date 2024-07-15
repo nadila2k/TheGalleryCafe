@@ -33,7 +33,7 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Reservation table Name</th>
+                    <th>Reservation Item Name</th>
                     <th>Quantity</th>
                     <th>Total</th>
                     <th>Action</th>

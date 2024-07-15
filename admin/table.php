@@ -1,7 +1,7 @@
 <?php include 'partials/header.php'; ?>
 <div class="content">
     <div id="alert"></div>
-    <h2>Manage category</h2>
+    <h2>Manage Table</h2>
     <br>
 
     <button type="button" class="btn btn-primary  " data-bs-toggle="modal" data-bs-target="#tableAddModel">
@@ -32,7 +32,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Add Table</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-4">
@@ -68,7 +68,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="updateModalLabel">Update Food Item</h5>
+                <h5 class="modal-title" id="updateModalLabel">Update Table</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-4">

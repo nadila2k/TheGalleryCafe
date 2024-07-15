@@ -64,9 +64,11 @@ document.addEventListener("DOMContentLoaded", async function () {
                            <td>${el.description}</td>
                            <td class="tbl-img"><img src="./../upload/${el.image}" alt="Image of ${el.name}"></td>
                            <td>
-                             <button type="button" class="btn btn-primary" onclick="deleteEvent(${el.id})">Delete</button>
-                             <button type="button" class="btn btn-primary" onclick="editEvent(${el.id})">Edit</button>
+                             <button type="button" class="btn btn-danger" onclick="deleteEvent(${el.id})">Delete</button>
+                            
                            </td>
+                           <td>
+                            <button type="button" class="btn btn-primary" onclick="editEvent(${el.id})">Edit</button></td>
                         </tr>`;
         });
     

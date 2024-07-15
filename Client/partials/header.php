@@ -23,7 +23,7 @@
           <li><a class="nav-link scrollto active" href="Index.php">Home</a></li>
           <li><a class="nav-link scrollto" href="#about">About</a></li>
           <li><a class="nav-link scrollto" href="#menu">Menu</a></li>
-          <li class="dropdown"><a href="#"><span>Cart</span> <i class="bi bi-chevron-down"></i></a>
+          <li class="dropdown"><a href="#"><span>Cart</span> <i class="bi bi-cart"></i></a>
             <ul>
               <li>
                 <div class="table-responsive">
@@ -31,7 +31,7 @@
                     <thead>
                       <tr>
                         <th>Shopping Bag</th>
-                        <th>Format</th>
+                        
                         <th>Quantity</th>
                         <th>Price</th>
                       </tr>
@@ -49,7 +49,7 @@
                         <td>Total</td>
                         <td></td>
                         <td></td>
-                        <td><button type="button"  class="btn btn-primary btn-block btn-lg" onclick="cartSubmit()">Submit</button></td>
+                        <td><button type="button"  class="btn btn-danger " onclick="cartSubmit()">Checkout</button></td>
                       </tr>
                     </tfoot>
                   </table>
@@ -66,7 +66,7 @@
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
-      <a href="#book-a-table" class="book-a-table-btn scrollto d-none d-lg-flex">Book a table</a>
+      <a href="#" class="book-a-table-btn scrollto d-none d-lg-flex">Parking slots remaining: 3</a>
 
     </div>
      
