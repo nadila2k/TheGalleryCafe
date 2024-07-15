@@ -6,7 +6,7 @@
     <div class="container position-relative text-center text-lg-start" data-aos="zoom-in" data-aos-delay="100">
         <div class="row">
             <div class="col-lg-8">
-                <h1>Welcome to <span>Restaurantly</span></h1>
+                <h1>Welcome to <span>The Gallery Café</span></h1>
                 <h2>Delivering great food for more than 18 years!</h2>
 
                 <div class="search">
@@ -33,27 +33,19 @@
                     <img src="../assets/image/about.jpg" alt="">
                 </div>
             </div>
-            <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content">
-                <h3>Voluptatem dignissimos provident quasi corporis voluptates sit assumenda.</h3>
+            <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content dark-background">
+                <h3>Welcome to The Gallery Café: Where Culinary Art Meets Tradition.</h3>
                 <p class="fst-italic">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore
-                    magna aliqua.
+                    Nestled in the heart of Colombo, The Gallery Café is more than just a dining destination; it's an experience. 
+                    Our restaurant seamlessly blends art, tradition, and culinary excellence to create unforgettable moments for our guests.
                 </p>
                 <ul>
-                    <li><i class="bi bi-check-circle"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-                    <li><i class="bi bi-check-circle"></i> Duis aute irure dolor in reprehenderit in voluptate velit.
-                    </li>
-                    <li><i class="bi bi-check-circle"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-                        aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat
-                        nulla pariatur.</li>
+                    <li><i class="bi bi-check-circle"></i> Exceptional cuisine from Sri Lankan, Chinese, and Italian dishes.</li>
+                    <li><i class="bi bi-check-circle"></i> Artistic and inviting ambiance for a memorable dining experience.</li>
+                    <li><i class="bi bi-check-circle"></i> Dedicated service that ensures every guest feels valued.</li>
                 </ul>
                 <p>
-                    Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                    voluptate
-                    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                    sunt in
-                    culpa qui officia deserunt mollit anim id est laborum
+                    At The Gallery Café, dining engages all your senses. Join us for a memorable meal. Discover why The Gallery Café is beloved in Colombo. We look forward to serving you.
                 </p>
             </div>
         </div>

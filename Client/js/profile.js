@@ -268,7 +268,58 @@ async function cancelReservation(id) {
       alertMessage("Cart Items Are Empty");
     }
   }
-
+  async function removeItem(cartItemId, total, reservationId) {
+    const data = {
+      cartItemId: cartItemId,
+      total: total,
+      reservationId: reservationId,
+    };
+  
+    const response = await fetch(
+      "http://localhost/TheGalleryCafe/controller/manageReservation.php",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    const responseData = await response.json();
+    if (responseData.status == true) {
+      alertMessage(responseData.message);
+      getReservation();
+      viewReservationByID(reservationId);
+    } else {
+      alertMessage(responseData.message);
+    }
+  }
+  
+  async function removeTable(tableId, reservationId) {
+    const data = {
+      tableId: tableId,
+      reservationId: reservationId,
+    };
+  
+    const response = await fetch(
+      "http://localhost/TheGalleryCafe/controller/manageReservation.php",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    const responseData = await response.json();
+    if (responseData.status == true) {
+      alertMessage(responseData.message);
+      getReservation();
+      viewReservationByID(reservationId);
+    } else {
+      alertMessage(responseData.message);
+    }
+  }
 
   function alertMessage(message, timeout = 3000) {
     const alert = document.getElementById("alert");
